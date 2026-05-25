@@ -3,10 +3,6 @@
 <style>
 :root {
   --pink:   #f03e8c;
-  --green:  #b8e000;
-  --purple: #6a3daa;
-  --teal:   #2cbfb0;
-  --orange: #ff7c2a;
   --yellow: #ffe535;
   --dark:   #1a1228;
   --cream:  #fffbe8;
@@ -33,7 +29,6 @@ html, body {
   padding: 0 0 16px;
 }
 
-/* HERO */
 .sw-hero {
   background-image: linear-gradient(135deg, #3d1a6e 0%, #6a3daa 60%, #9b2db5 100%);
   padding: 36px 28px 28px;
@@ -86,7 +81,6 @@ html, body {
   font-style: normal;
 }
 
-/* SERIES TABS — two only */
 .sw-tabs {
   display: flex;
   gap: 8px;
@@ -122,7 +116,6 @@ html, body {
   color: var(--lime);
 }
 
-/* MAIN CARD */
 .sw-main {
   background: rgba(255,255,255,0.04);
   border: 2px solid rgba(168,232,64,0.3);
@@ -143,51 +136,21 @@ html, body {
   text-shadow: 2px 2px 0 rgba(0,0,0,0.3);
 }
 
-/* COMIC FRAME — single image display */
 .sw-frame {
-  background: white;
+  background: #fffdf0;
   border-bottom: 3px solid var(--dark);
   min-height: 320px;
   display: flex;
-  align-items: stretch;
+  align-items: center;
+  justify-content: center;
   cursor: zoom-in;
   position: relative;
-}
-
-.sw-frame-img {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   padding: 12px;
-  background: #fffdf0;
 }
 
-.sw-frame-img img {
+.sw-frame img {
   max-width: 100%;
-  max-height: 480px;
-  object-fit: contain;
-  display: block;
-  border-radius: 4px;
-}
-
-/* LIGHTBOX image */
-.sw-lightbox-frame-img {
-  width: 100%;
-  max-width: 900px;
-  max-height: 72vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: #fffdf0;
-  border-radius: 10px;
-  padding: 16px;
-  overflow: hidden;
-}
-
-.sw-lightbox-frame-img img {
-  max-width: 100%;
-  max-height: 68vh;
+  max-height: 500px;
   object-fit: contain;
   display: block;
   border-radius: 4px;
@@ -210,9 +173,14 @@ html, body {
   z-index: 2;
 }
 
-/* archive grid */
+.sw-loading {
+  font-family: 'Fredoka One', cursive;
+  font-size: 16px;
+  color: rgba(255,251,232,0.4);
+  text-align: center;
+  padding: 60px 20px;
+}
 
-/* ACTIONS */
 .sw-actions {
   display: flex;
   gap: 8px;
@@ -242,7 +210,6 @@ html, body {
   color: var(--lime);
 }
 
-/* AUTHOR NOTE */
 .sw-note {
   background: rgba(0,0,0,0.32);
   border-left: 4px solid var(--lime);
@@ -253,6 +220,7 @@ html, body {
   font-size: 17px;
   color: var(--cream);
   line-height: 1.5;
+  display: none;
 }
 
 .sw-note-label {
@@ -264,7 +232,6 @@ html, body {
   margin-bottom: 5px;
 }
 
-/* ARCHIVE */
 .sw-archive {
   display: none;
   margin: 12px 18px 0;
@@ -293,7 +260,7 @@ html, body {
   background: rgba(255,255,255,0.05);
   border: 2px solid rgba(106,61,170,0.5);
   border-radius: 10px;
-  padding: 8px;
+  padding: 6px;
   cursor: pointer;
   text-align: center;
   transition: all 0.12s;
@@ -304,28 +271,29 @@ html, body {
   border-color: var(--lime);
 }
 
-.sw-thumb-img {
+.sw-thumb img {
   width: 100%;
   height: 70px;
-  overflow: hidden;
+  object-fit: cover;
   border-radius: 4px;
+  display: block;
   margin-bottom: 5px;
-  background: #f0ece3;
 }
+
 .sw-thumb-title {
   font-family: 'Fredoka One', cursive;
-  font-size: 11px;
+  font-size: 10px;
   color: var(--cream);
   line-height: 1.3;
 }
+
 .sw-thumb-num {
   font-family: 'Nunito', sans-serif;
-  font-size: 10px;
+  font-size: 9px;
   color: rgba(255,251,232,0.4);
-  margin-top: 3px;
+  margin-top: 2px;
 }
 
-/* COUNTER */
 .sw-counter {
   text-align: center;
   padding: 8px;
@@ -336,7 +304,6 @@ html, body {
   text-transform: uppercase;
 }
 
-/* NAV BAR */
 .sw-nav {
   background: rgba(0,0,0,0.3);
   display: flex;
@@ -358,8 +325,9 @@ html, body {
   color: var(--lime);
   cursor: pointer;
   transition: all 0.12s;
-  font-size: 18px;
+  font-size: 20px;
   font-family: 'Fredoka One', cursive;
+  line-height: 1;
 }
 
 .sw-nav-btn:hover:not([disabled]) {
@@ -414,6 +382,15 @@ html, body {
   text-align: center;
 }
 
+.sw-lightbox-img {
+  max-width: 95vw;
+  max-height: 72vh;
+  object-fit: contain;
+  display: block;
+  border-radius: 8px;
+  background: #fffdf0;
+}
+
 .sw-lightbox-nav {
   display: flex;
   align-items: center;
@@ -431,6 +408,7 @@ html, body {
   cursor: pointer;
   transition: all 0.12s;
   font-family: 'Fredoka One', cursive;
+  line-height: 1;
 }
 
 .sw-lightbox-arrow:hover { background: rgba(168,232,64,0.14); }
@@ -451,7 +429,6 @@ html, body {
 
 .sw-lightbox-close:hover { background: #c0206a; }
 
-/* FOOTER */
 .sw-footer {
   text-align: center;
   padding: 14px 20px 4px;
@@ -464,19 +441,10 @@ html, body {
 
 .sw-footer a { color: rgba(168,232,64,0.6); text-decoration: none; }
 
-@media (max-width: 600px) {
-  .sw-lightbox-panels { grid-template-columns: 1fr; overflow-y: auto; max-height: 60vh; }
-  .sw-lightbox-chars { font-size: 56px; }
-  .sw-lightbox-bubble { font-size: 14px; }
-  .sw-lightbox-panel { min-height: 220px; }
-}
-
 @media (max-width: 520px) {
   .sw-hero { padding: 28px 16px 22px; }
   .sw-main { margin: 12px 10px 0; }
   .sw-nav  { margin: 0 10px; padding: 10px 12px; }
-  .sw-chars { font-size: 38px; }
-  .sw-bubble { font-size: 11px; }
 }
 </style>
 
@@ -495,8 +463,8 @@ html, body {
   </div>
 
   <div class="sw-tabs">
-    <button class="sw-tab active"  onclick="switchSeries('ebt',this)">&#127800; Early Bird Routines</button>
-    <button class="sw-tab"         onclick="switchSeries('cft',this)">&#128038; Chirps for Thought</button>
+    <button class="sw-tab active" onclick="switchSeries('ebt',this)">&#127800; Early Bird Routines</button>
+    <button class="sw-tab"        onclick="switchSeries('cft',this)">&#128038; Chirps for Thought</button>
   </div>
 
   <div class="sw-main">
@@ -504,9 +472,10 @@ html, body {
       <div class="sw-strip-title" id="sw-stitle"></div>
     </div>
 
-    <div class="sw-frame" onclick="openLightbox()">
+    <div class="sw-frame" id="sw-frame" onclick="openLightbox()">
       <div class="sw-expand-hint">&#128269; Tap to expand</div>
-      <div class="sw-panels" id="sw-panels"></div>
+      <div class="sw-loading" id="sw-loading">Loading strips...</div>
+      <img id="sw-img" src="" alt="" style="display:none;" />
     </div>
 
     <div class="sw-actions">
@@ -518,7 +487,10 @@ html, body {
       </button>
     </div>
 
-    <div class="sw-note" id="sw-note"></div>
+    <div class="sw-note" id="sw-note">
+      <div class="sw-note-label">Morgan&rsquo;s Note</div>
+      <span id="sw-note-text"></span>
+    </div>
 
     <div class="sw-archive" id="sw-archive">
       <div class="sw-archive-title" id="sw-archivetitle"></div>
@@ -529,7 +501,7 @@ html, body {
   <div class="sw-counter" id="sw-counter"></div>
 
   <div class="sw-nav">
-    <button class="sw-nav-btn" id="sw-first" onclick="goFirst()"  title="First strip">&#171;</button>
+    <button class="sw-nav-btn" id="sw-first" onclick="goFirst()"  title="First">&#171;</button>
     <button class="sw-nav-btn" id="sw-prev"  onclick="goPrev()"   title="Previous">&#8249;</button>
     <div class="sw-nav-center">
       <button class="sw-nav-end" onclick="goFirst()">First</button>
@@ -541,7 +513,7 @@ html, body {
 
   <div class="sw-lightbox" id="sw-lightbox" onclick="closeLightboxOutside(event)">
     <div class="sw-lightbox-title" id="lb-title"></div>
-    <div class="sw-lightbox-panels" id="lb-panels"></div>
+    <img class="sw-lightbox-img" id="lb-img" src="" alt="" />
     <div class="sw-lightbox-nav">
       <button class="sw-lightbox-arrow" id="lb-prev" onclick="lbPrev(event)">&#8249;</button>
       <button class="sw-lightbox-close" onclick="closeLightbox()">&#10005; Close</button>
@@ -556,68 +528,123 @@ html, body {
 </div>
 
 <script>
-// ── STRIPS DATA ──────────────────────────────────────────────
-// Each entry needs only: image path, and an optional note.
-// The title is generated automatically from the filename.
-// image naming: use-hyphens-only.jpg  →  displays as "Use Hyphens Only"
-// To add a new strip: upload the image, add one line here, commit.
+// ── NOTES ────────────────────────────────────────────────────
+// Optional Morgan's Notes per strip. Key = exact filename.
+// Leave this object empty if you have no notes yet.
+// Add a note like: "my-cartoon.jpg": "Your note here. — MVANNP"
 
-const strips = {
-  ebt: [
-    // EARLY BIRD ROUTINES — add your strips below
-    // { image:"images/ebt/your-cartoon-name.jpg", note:"Optional Morgan's note. — MVANNP" },
-  ],
-  cft: [
-    // CHIRPS FOR THOUGHT — add your strips below
-    // { image:"images/cft/your-cartoon-name.jpg", note:"Optional Morgan's note. — MVANNP" },
-  ]
+const notes = {
+  "low-visibility-cycle.jpg": "The algorithm wants engagement. Bug wants pie. Honestly, same thing. — MVANNP",
+  "productive-relaxation.jpg": "Rest is a skill. Practice makes imperfect — and that's perfectly fine. — MVANNP",
+  "wings-version-2.jpg": "Sometimes the breakthrough isn't a new tool — it's remembering what you already know how to use. — MVANNP",
+  "the-nest-hatching-ideas.jpg": "Little shops like these make the world work better. — MVANNP"
 };
 
-// ── AUTO-TITLE FROM FILENAME ──────────────────────────────────
-function titleFromImage(path) {
-  const file = path.split('/').pop().replace(/\.[^.]+$/, '');
-  return file.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
-}
-
+// ── STATE ─────────────────────────────────────────────────────
 const seriesNames = { ebt:"Early Bird Routines", cft:"Chirps for Thought" };
-let cur='ebt', idx=0, archOpen=false;
+let cur = 'ebt', idx = 0, archOpen = false;
+let strips = { ebt: [], cft: [] };
 
-// ── SINGLE IMAGE PANEL ────────────────────────────────────────
-function panelHTML(strip, large) {
-  const fc = large ? 'sw-lightbox-frame-img' : 'sw-frame-img';
-  const title = strip.title || titleFromImage(strip.image);
-  return '<div class="'+fc+'"><img src="'+strip.image+'" alt="'+title+'" style="width:100%;height:100%;object-fit:contain;display:block;" /></div>';
+// ── TITLE FROM FILENAME ───────────────────────────────────────
+function titleFromFile(filename) {
+  return filename
+    .replace(/\.[^.]+$/, '')
+    .split('-')
+    .map(w => w.charAt(0).toUpperCase() + w.slice(1))
+    .join(' ');
 }
 
+// ── LOAD MANIFEST ─────────────────────────────────────────────
+async function loadManifest(series) {
+  try {
+    const res = await fetch('manifests/' + series + '.txt?nocache=' + Date.now());
+    if (!res.ok) return [];
+    const text = await res.text();
+    return text.split('\n')
+      .map(l => l.trim())
+      .filter(l => l.length > 0 && !l.startsWith('#'));
+  } catch(e) {
+    return [];
+  }
+}
+
+async function init() {
+  const [ebtFiles, cftFiles] = await Promise.all([
+    loadManifest('ebt'),
+    loadManifest('cft')
+  ]);
+  strips.ebt = ebtFiles.map(f => ({ file: f, path: 'images/ebt/' + f }));
+  strips.cft = cftFiles.map(f => ({ file: f, path: 'images/cft/' + f }));
+  render();
+}
+
+// ── RENDER ────────────────────────────────────────────────────
 function render() {
-  const s = strips[cur], strip = s[idx];
-  const title = strip.title || titleFromImage(strip.image);
+  const s = strips[cur];
+  const loading = document.getElementById('sw-loading');
+  const img = document.getElementById('sw-img');
+
+  if (s.length === 0) {
+    loading.textContent = 'No strips yet — check back soon!';
+    loading.style.display = 'block';
+    img.style.display = 'none';
+    document.getElementById('sw-stitle').textContent = '';
+    document.getElementById('sw-counter').textContent = '';
+    document.getElementById('sw-note').style.display = 'none';
+    ['sw-first','sw-prev','sw-next','sw-last'].forEach(id => document.getElementById(id).disabled = true);
+    return;
+  }
+
+  const strip = s[idx];
+  const title = titleFromFile(strip.file);
+  const note = notes[strip.file] || '';
+
   document.getElementById('sw-stitle').textContent = title;
-  document.getElementById('sw-panels').innerHTML = panelHTML(strip, false);
   document.getElementById('sw-counter').textContent = 'Strip ' + (idx+1) + ' of ' + s.length;
-  if (strip.note) {
-    document.getElementById('sw-note').innerHTML = '<div class="sw-note-label">Morgan\'s Note</div>' + strip.note;
+
+  loading.style.display = 'none';
+  img.src = strip.path;
+  img.alt = title;
+  img.style.display = 'block';
+
+  if (note) {
+    document.getElementById('sw-note-text').textContent = note;
     document.getElementById('sw-note').style.display = 'block';
   } else {
     document.getElementById('sw-note').style.display = 'none';
   }
+
   document.getElementById('sw-first').disabled = idx === 0;
   document.getElementById('sw-prev').disabled  = idx === 0;
   document.getElementById('sw-next').disabled  = idx === s.length - 1;
   document.getElementById('sw-last').disabled  = idx === s.length - 1;
+
   if (archOpen) buildArchive();
 }
 
+// ── ARCHIVE ───────────────────────────────────────────────────
 function buildArchive() {
   const s = strips[cur];
   document.getElementById('sw-archivetitle').textContent = seriesNames[cur] + ' — All Strips';
   document.getElementById('sw-archivegrid').innerHTML = s.map((strip, i) => {
-    const title = strip.title || titleFromImage(strip.image);
-    return '<div class="sw-thumb'+(i===idx?' cur':'')+'" onclick="goTo('+i+')">' +
-      '<div class="sw-thumb-img"><img src="'+strip.image+'" alt="'+title+'" style="width:100%;height:100%;object-fit:cover;border-radius:4px;" /></div>' +
-      '<div class="sw-thumb-title">'+title+'</div>' +
-      '<div class="sw-thumb-num">#'+(i+1)+'</div></div>';
+    const title = titleFromFile(strip.file);
+    return '<div class="sw-thumb' + (i===idx?' cur':'') + '" onclick="goTo(' + i + ')">' +
+      '<img src="' + strip.path + '" alt="' + title + '" />' +
+      '<div class="sw-thumb-title">' + title + '</div>' +
+      '<div class="sw-thumb-num">#' + (i+1) + '</div></div>';
   }).join('');
+}
+
+// ── NAVIGATION ────────────────────────────────────────────────
+function goFirst()  { idx = 0; render(); }
+function goLatest() { idx = strips[cur].length - 1; render(); }
+function goPrev()   { if (idx > 0) { idx--; render(); } }
+function goNext()   { if (idx < strips[cur].length - 1) { idx++; render(); } }
+function goTo(i)    {
+  idx = i; archOpen = false;
+  document.getElementById('sw-archive').classList.remove('open');
+  document.getElementById('sw-archivelabel').textContent = 'All Strips';
+  render();
 }
 
 function switchSeries(series, el) {
@@ -629,12 +656,6 @@ function switchSeries(series, el) {
   render();
 }
 
-function goFirst()  { idx = 0; render(); }
-function goLatest() { idx = strips[cur].length - 1; render(); }
-function goPrev()   { if (idx > 0) { idx--; render(); } }
-function goNext()   { if (idx < strips[cur].length - 1) { idx++; render(); } }
-function goTo(i)    { idx = i; archOpen = false; document.getElementById('sw-archive').classList.remove('open'); document.getElementById('sw-archivelabel').textContent = 'All Strips'; render(); }
-
 function toggleArchive() {
   archOpen = !archOpen;
   document.getElementById('sw-archive').classList.toggle('open', archOpen);
@@ -642,11 +663,12 @@ function toggleArchive() {
   if (archOpen) buildArchive();
 }
 
+// ── LIGHTBOX ──────────────────────────────────────────────────
 function openLightbox() {
+  if (strips[cur].length === 0) return;
   const strip = strips[cur][idx];
-  const title = strip.title || titleFromImage(strip.image);
-  document.getElementById('lb-title').textContent = title;
-  document.getElementById('lb-panels').innerHTML = panelHTML(strip, true);
+  document.getElementById('lb-title').textContent = titleFromFile(strip.file);
+  document.getElementById('lb-img').src = strip.path;
   document.getElementById('lb-prev').disabled = idx === 0;
   document.getElementById('lb-next').disabled = idx === strips[cur].length - 1;
   document.getElementById('sw-lightbox').classList.add('open');
@@ -674,7 +696,7 @@ function lbNext(e) {
 
 function handleShare() {
   if (navigator.share) {
-    navigator.share({ title: strips[cur][idx].title, url: window.location.href });
+    navigator.share({ title: 'Seeds & Worms', url: window.location.href });
   } else {
     navigator.clipboard && navigator.clipboard.writeText(window.location.href);
     alert('Link copied!');
@@ -688,5 +710,5 @@ document.addEventListener('keydown', function(e) {
   if (e.key === 'ArrowRight') lbNext({ stopPropagation: function(){} });
 });
 
-render();
+init();
 </script>
