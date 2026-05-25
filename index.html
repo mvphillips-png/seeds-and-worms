@@ -139,25 +139,22 @@ html, body {
 .sw-frame {
   background: #fffdf0;
   border-bottom: 3px solid var(--dark);
-  min-height: 280px;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: zoom-in;
   position: relative;
-  padding: 8px;
-  /* make image area as tall as possible on phone */
-  aspect-ratio: 1 / 1;
-  max-height: 80vw;
+  padding: 0;
+  width: 100%;
+  overflow: hidden;
 }
 
 .sw-frame img {
-  max-width: 100%;
-  max-height: 100%;
   width: 100%;
-  object-fit: contain;
+  height: auto;
   display: block;
-  border-radius: 4px;
+  object-fit: contain;
+  border-radius: 0;
 }
 
 .sw-expand-hint {
@@ -471,8 +468,8 @@ html, body {
   .sw-hero { padding: 36px 28px 28px; }
   .sw-main { margin: 16px 16px 0; border-radius: 14px; }
   .sw-nav  { margin: 0 16px; padding: 10px 20px; }
-  .sw-frame { aspect-ratio: unset; max-height: none; min-height: 380px; padding: 12px; }
-  .sw-frame img { max-height: 520px; }
+  .sw-frame { padding: 0; min-height: unset; }
+  .sw-frame img { max-height: none; width: 100%; }
   .sw-strip-meta { padding: 14px 18px 10px; }
   .sw-strip-title { font-size: 22px; }
   .sw-actions { padding: 12px 18px; }
