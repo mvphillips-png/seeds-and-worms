@@ -705,7 +705,7 @@
     <div class="chirp-card">
       <div class="out-pill pill-yellow">Chirp for Thought</div>
       <div class="out-title">The Takeaway</div>
-      <div class="out-sub">// Printed at the bottom of the panel · CHIRPS FOR THOUGHT -- MVANNP</div>
+      <div class="out-sub" id="outChirpSub">// Printed at the bottom of the panel · MVANNP</div>
       <div class="chirp-zap" id="outChirp">–</div>
     </div>
 
@@ -807,17 +807,34 @@ In the JSON, include the supporting character's name and a one-sentence descript
     const seriesInstructions = {
       'Chirps for Thought': `
 SERIES: CHIRPS FOR THOUGHT
-This panel is a quick-hit creator or entrepreneur tip. The subject matter is:
-- The business of being a creative entrepreneur
-- Brand building, marketing, visibility, consistency
-- The mindset and motivation it takes to create and put work out into the world
-- The small truths about creative life that make people nod and share
-Tone: Warm, punchy, a little playful. Real advice that lands fast. The kind of thing you screenshot and send to a friend.
+Quick-hit observations about life, creativity, people, and the world -- at any time of day. Morning, afternoon, evening, Sunday night, random Tuesday. There is no time-of-day association with this series. Do NOT reference mornings, waking up, alarms, coffee routines, or anything morning-specific unless the writer's topic explicitly asks for it.
+
+WHAT THIS SERIES IS:
+Punchy, warm, funny observations that make people nod, laugh, or send the panel to someone they know. Broader than Early Bird Routines (which is specifically about morning habits and daily practices). Broader than Honestly Though (which goes deep on the big life questions). Chirps for Thought is the quick sideways truth -- the thing you notice, the thing that is funny because it is accurate, the small observation that lands.
+
+SUBJECT MATTER -- any of these, at any time:
+- The funny gap between how things are supposed to work and how they actually work
+- Small human observations that are universal (not creative-specific, not morning-specific)
+- The business and culture of being a creative person -- branding, posting, making things, sharing work
+- Relationships, other people, social dynamics, the things people do that are funny because we all do them
+- Technology, social media, the algorithm, the phone -- as human comedy not tech commentary
+- The small victories that no one else sees but matter anyway
+- The things people say versus what they mean
+- Anything from the wound library that deserves a lighter, quicker treatment
+
+TONE: Warm, punchy, playful. Faster and lighter than Honestly Though. The kind of panel you screenshot mid-scroll and send to a friend without saying anything because it says it for you. A little dry. Affectionate. Never preachy.
+
+NOT: morning content, alarm jokes, coffee personality references, routine advice. Those belong to Early Bird Routines.
+NOT: deep existential territory. That belongs to Honestly Though.
+YES: the funny, true, sideways observation about being a person alive right now.
+
 The caption label reads: Chirps for Thought -- MVANNP
-Setting: The branch outdoors, open sky. Baker Bird and Bug on their perch.`,
+Setting: The branch, The Nest, or wherever the gag needs. No default time of day.`,
 
       'Early Bird Routines': `
 SERIES: EARLY BIRD ROUTINES
+THIS SERIES OWNS THE MORNING. Morning content, alarm jokes, routines, coffee as a personality, the 6am negotiation -- all of that belongs here and ONLY here. The other series do not touch morning territory unless explicitly directed to.
+
 The companion series to Honestly Though. Same rawness, different target. Where Honestly Though is about the big life questions, Early Bird Routines is about the specific, daily, hilarious struggle of trying to function like a healthy creative person before the world gets to you.
 
 == WHAT THIS SERIES IS ==
@@ -1180,6 +1197,10 @@ Respond ONLY with valid JSON. No markdown, no preamble:
     document.getElementById('outVisualGag').textContent = d.visual_gag || '';
     document.getElementById('outWhyItWorks').textContent = d.why_it_works || '';
     document.getElementById('outChirp').textContent = d.chirp || '';
+
+    // Dynamic chirp subtitle based on series
+    const seriesLabel = d.series || selectedSeries || 'Seeds & Worms';
+    document.getElementById('outChirpSub').textContent = `// Printed at the bottom of the panel · ${seriesLabel.toUpperCase()} -- MVANNP`;
 
     const lineTypeEl = document.getElementById('outLineType');
     const typeLabels = { caption: '// Caption below panel', single: '// One character speaks', dialogue: '// Exchange in speech bubbles' };
