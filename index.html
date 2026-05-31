@@ -31,7 +31,7 @@ html, body {
   padding: 0 0 20px;
 }
 
-/* ── HERO ── */
+/* HERO */
 .sw-hero {
   background-image: linear-gradient(135deg, #3d1a6e 0%, #6a3daa 60%, #9b2db5 100%);
   padding: 22px 16px 18px;
@@ -81,13 +81,14 @@ html, body {
 
 .sw-hero-desc em { color: var(--lime); font-style: normal; }
 
-/* ── TABS ── */
+/* TABS */
 .sw-tabs {
   display: flex;
-  gap: 8px;
-  padding: 12px 14px;
+  gap: 6px;
+  padding: 12px 10px;
   background: rgba(0,0,0,0.3);
   justify-content: center;
+  flex-wrap: wrap;
   border-bottom: 2px solid rgba(255,255,255,0.08);
 }
 
@@ -95,9 +96,9 @@ html, body {
   background: rgba(255,255,255,0.06);
   border: 2px solid rgba(106,61,170,0.7);
   border-radius: 100px;
-  padding: 9px 20px;
+  padding: 8px 16px;
   font-family: 'Fredoka One', cursive;
-  font-size: clamp(13px, 3.5vw, 15px);
+  font-size: clamp(12px, 3vw, 14px);
   letter-spacing: 0.03em;
   color: rgba(255,251,232,0.7);
   cursor: pointer;
@@ -114,7 +115,22 @@ html, body {
   color: #1a3a00;
 }
 
-/* ── MAIN CARD ── */
+/* TOTAL COUNT */
+.sw-totalcount {
+  text-align: center;
+  padding: 6px 16px;
+  font-family: 'Fredoka One', cursive;
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  color: rgba(255,251,232,0.38);
+  text-transform: uppercase;
+  background: rgba(0,0,0,0.2);
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+
+.sw-totalcount span { color: var(--lime); }
+
+/* MAIN CARD */
 .sw-main {
   background: rgba(255,255,255,0.04);
   border: 2px solid rgba(168,232,64,0.3);
@@ -130,12 +146,12 @@ html, body {
 
 .sw-strip-title {
   font-family: 'Fredoka One', cursive;
-  font-size: clamp(16px, 4.5vw, 22px);
+  font-size: clamp(15px, 4.5vw, 22px);
   color: var(--yellow);
   text-shadow: 2px 2px 0 rgba(0,0,0,0.3);
 }
 
-/* ── COMIC FRAME ── */
+/* COMIC FRAME */
 .sw-frame {
   background: #fffdf0;
   border-bottom: 3px solid var(--dark);
@@ -154,7 +170,6 @@ html, body {
   height: auto;
   display: block;
   object-fit: contain;
-  border-radius: 0;
 }
 
 .sw-expand-hint {
@@ -182,7 +197,7 @@ html, body {
   padding: 60px 20px;
 }
 
-/* ── ACTIONS ── */
+/* ACTIONS */
 .sw-actions {
   display: flex;
   gap: 8px;
@@ -214,7 +229,7 @@ html, body {
   color: var(--lime);
 }
 
-/* ── MORGAN'S NOTE ── */
+/* MORGAN'S NOTE */
 .sw-note {
   background: rgba(0,0,0,0.32);
   border-left: 4px solid var(--lime);
@@ -237,29 +252,29 @@ html, body {
   margin-bottom: 4px;
 }
 
-/* ── TOTAL COUNT ── */
-.sw-totalcount {
-  text-align: center;
-  padding: 7px 16px;
-  font-family: 'Fredoka One', cursive;
-  font-size: 12px;
-  letter-spacing: 0.06em;
-  color: rgba(255,251,232,0.38);
-  text-transform: uppercase;
-  background: rgba(0,0,0,0.2);
-  border-bottom: 1px solid rgba(255,255,255,0.06);
+/* ARCHIVE */
+.sw-archive {
+  display: none;
+  margin: 10px 14px 0;
+  background: rgba(0,0,0,0.28);
+  border: 2px solid rgba(168,232,64,0.25);
+  border-radius: 10px;
+  padding: 12px;
 }
 
-.sw-totalcount span {
-  color: var(--lime);
-}
+.sw-archive.open { display: block; }
 
-/* ── ARCHIVE HEADER + SEARCH ── */
 .sw-archive-header {
   margin-bottom: 10px;
   display: flex;
   flex-direction: column;
   gap: 8px;
+}
+
+.sw-archive-title {
+  font-family: 'Fredoka One', cursive;
+  font-size: 15px;
+  color: var(--yellow);
 }
 
 .sw-search {
@@ -272,17 +287,11 @@ html, body {
   font-size: 14px;
   color: var(--cream);
   outline: none;
-  transition: border-color 0.12s;
   -webkit-appearance: none;
 }
 
-.sw-search::placeholder {
-  color: rgba(255,251,232,0.35);
-}
-
-.sw-search:focus {
-  border-color: var(--lime);
-}
+.sw-search::placeholder { color: rgba(255,251,232,0.35); }
+.sw-search:focus { border-color: var(--lime); }
 
 .sw-no-results {
   font-family: 'Boogaloo', cursive;
@@ -290,25 +299,6 @@ html, body {
   color: rgba(255,251,232,0.4);
   text-align: center;
   padding: 20px 0;
-}
-
-/* ── ARCHIVE ── */
-.sw-archive {
-  display: none;
-  margin: 10px 14px 0;
-  background: rgba(0,0,0,0.28);
-  border: 2px solid rgba(168,232,64,0.25);
-  border-radius: 10px;
-  padding: 12px;
-}
-
-.sw-archive.open { display: block; }
-
-.sw-archive-title {
-  font-family: 'Fredoka One', cursive;
-  font-size: 15px;
-  color: var(--yellow);
-  margin-bottom: 10px;
 }
 
 .sw-archive-grid {
@@ -355,7 +345,7 @@ html, body {
   margin-top: 2px;
 }
 
-/* ── COUNTER ── */
+/* COUNTER */
 .sw-counter {
   text-align: center;
   padding: 8px 0 4px;
@@ -366,7 +356,7 @@ html, body {
   text-transform: uppercase;
 }
 
-/* ── NAV BAR ── */
+/* NAV BAR */
 .sw-nav {
   background: rgba(0,0,0,0.3);
   display: flex;
@@ -383,18 +373,13 @@ html, body {
   background: rgba(255,255,255,0.06);
   border: 2px solid rgba(106,61,170,0.6);
   border-radius: 50%;
-  width: 46px;
-  height: 46px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  width: 46px; height: 46px;
+  display: flex; align-items: center; justify-content: center;
   color: var(--lime);
   cursor: pointer;
-  transition: all 0.12s;
   font-size: 22px;
   font-family: 'Fredoka One', cursive;
   line-height: 1;
-  /* large tap target */
   touch-action: manipulation;
 }
 
@@ -421,7 +406,6 @@ html, body {
   color: var(--lime);
   cursor: pointer;
   opacity: 0.65;
-  transition: opacity 0.12s;
   text-transform: uppercase;
   min-height: 44px;
   display: flex;
@@ -431,7 +415,7 @@ html, body {
 
 .sw-nav-end:active { opacity: 1; }
 
-/* ── LIGHTBOX ── */
+/* LIGHTBOX */
 .sw-lightbox {
   display: none;
   position: fixed;
@@ -451,7 +435,6 @@ html, body {
   font-family: 'Fredoka One', cursive;
   font-size: clamp(16px, 4.5vw, 24px);
   color: var(--yellow);
-  text-shadow: 2px 2px 0 rgba(0,0,0,0.4);
   text-align: center;
   padding: 0 10px;
 }
@@ -475,11 +458,8 @@ html, body {
   background: rgba(255,255,255,0.08);
   border: 2px solid rgba(168,232,64,0.4);
   border-radius: 50%;
-  width: 50px;
-  height: 50px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  width: 50px; height: 50px;
+  display: flex; align-items: center; justify-content: center;
   color: var(--lime);
   font-size: 26px;
   cursor: pointer;
@@ -500,12 +480,11 @@ html, body {
   font-size: 15px;
   color: white;
   cursor: pointer;
-  letter-spacing: 0.06em;
   min-height: 48px;
   touch-action: manipulation;
 }
 
-/* ── FOOTER ── */
+/* FOOTER */
 .sw-footer {
   text-align: center;
   padding: 14px 16px 4px;
@@ -518,31 +497,27 @@ html, body {
 
 .sw-footer a { color: rgba(168,232,64,0.55); text-decoration: none; }
 
-/* ── DESKTOP UPGRADES ── */
+/* DESKTOP */
 @media (min-width: 600px) {
-  .sw-hero { padding: 36px 28px 28px; }
-  .sw-main { margin: 16px 16px 0; border-radius: 14px; }
-  .sw-nav  { margin: 0 16px; padding: 10px 20px; }
-  .sw-frame { padding: 0; min-height: unset; }
-  .sw-frame img { max-height: none; width: 100%; }
+  .sw-hero    { padding: 36px 28px 28px; }
+  .sw-main    { margin: 16px 16px 0; border-radius: 14px; }
+  .sw-nav     { margin: 0 16px; padding: 10px 20px; }
   .sw-strip-meta { padding: 14px 18px 10px; }
-  .sw-strip-title { font-size: 22px; }
   .sw-actions { padding: 12px 18px; }
-  .sw-note { margin: 12px 18px 0; padding: 12px 16px; }
+  .sw-note    { margin: 12px 18px 0; padding: 12px 16px; }
   .sw-archive { margin: 12px 18px 0; }
   .sw-archive-grid { grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); }
   .sw-thumb img { height: 70px; }
   .sw-nav-btn { width: 40px; height: 40px; font-size: 20px; }
-  .sw-tab { padding: 7px 22px; font-size: 14px; min-height: unset; }
-  .sw-lightbox-img { max-height: 72vh; }
-  .sw-wrap { border-radius: 16px; }
+  .sw-tab     { font-size: 14px; min-height: unset; }
+  .sw-wrap    { border-radius: 16px; }
 }
 </style>
 
 <div class="sw-wrap">
 
   <div class="sw-hero">
-    <div class="sw-eyebrow">&#10022; Seeds &amp; Worms &middot; Chirps for Thought</div>
+    <div class="sw-eyebrow">&#10022; Seeds &amp; Worms &middot; The Daily Chirp</div>
     <div class="sw-hero-title">SEEDS &amp; WORMS</div>
     <div class="sw-hero-sub">THE DAILY CHIRP</div>
     <p class="sw-hero-desc">
@@ -560,6 +535,9 @@ html, body {
   </div>
 
   <div class="sw-totalcount" id="sw-totalcount"></div>
+
+  <div class="sw-main">
+
     <div class="sw-strip-meta">
       <div class="sw-strip-title" id="sw-stitle"></div>
     </div>
@@ -591,7 +569,8 @@ html, body {
       </div>
       <div class="sw-archive-grid" id="sw-archivegrid"></div>
     </div>
-  </div>
+
+  </div><!-- /sw-main -->
 
   <div class="sw-counter" id="sw-counter"></div>
 
@@ -634,31 +613,7 @@ const seriesNames = { ebt:"Early Bird Routines", cft:"Chirps for Thought", bbi:"
 let cur='ebt', idx=0, archOpen=false;
 let strips = { ebt:[], cft:[], bbi:[] };
 
-function updateTotalCount() {
-  const total = strips.ebt.length + strips.cft.length + strips.bbi.length;
-  document.getElementById('sw-totalcount').innerHTML =
-    '<span>' + total + '</span> cartoon' + (total !== 1 ? 's' : '') + ' and counting';
-}
-
-function filterArchive() {
-  const query = document.getElementById('sw-search').value.toLowerCase().trim();
-  const s = strips[cur];
-  const filtered = query
-    ? s.filter(strip => titleFromFile(strip.file).toLowerCase().includes(query))
-    : s;
-  if (filtered.length === 0) {
-    document.getElementById('sw-archivegrid').innerHTML = '<div class="sw-no-results">No strips found for "' + query + '"</div>';
-    return;
-  }
-  document.getElementById('sw-archivegrid').innerHTML = filtered.map((strip) => {
-    const i = s.indexOf(strip);
-    const title = titleFromFile(strip.file);
-    return '<div class="sw-thumb' + (i===idx?' cur':'') + '" onclick="goTo(' + i + ')">'
-      + '<img src="' + strip.path + '" alt="' + title + '" />'
-      + '<div class="sw-thumb-title">' + title + '</div>'
-      + '<div class="sw-thumb-num">#' + (i+1) + '</div></div>';
-  }).join('');
-}
+function titleFromFile(f) {
   return f.replace(/\.[^.]+$/,'').split('-').map(w=>w.charAt(0).toUpperCase()+w.slice(1)).join(' ');
 }
 
@@ -671,19 +626,46 @@ async function loadManifest(series) {
   } catch(e) { return []; }
 }
 
+function updateTotalCount() {
+  const total = strips.ebt.length + strips.cft.length + strips.bbi.length;
+  document.getElementById('sw-totalcount').innerHTML =
+    '<span>'+total+'</span> cartoon'+(total!==1?'s':'')+' and counting';
+}
+
+function filterArchive() {
+  const query = document.getElementById('sw-search').value.toLowerCase().trim();
+  const s = strips[cur];
+  const filtered = query ? s.filter(strip=>titleFromFile(strip.file).toLowerCase().includes(query)) : s;
+  if (filtered.length===0) {
+    document.getElementById('sw-archivegrid').innerHTML='<div class="sw-no-results">No strips found for "'+query+'"</div>';
+    return;
+  }
+  document.getElementById('sw-archivegrid').innerHTML = filtered.map(strip=>{
+    const i=s.indexOf(strip);
+    const title=titleFromFile(strip.file);
+    return '<div class="sw-thumb'+(i===idx?' cur':'')+'" onclick="goTo('+i+')">'
+      +'<img src="'+strip.path+'" alt="'+title+'" />'
+      +'<div class="sw-thumb-title">'+title+'</div>'
+      +'<div class="sw-thumb-num">#'+(i+1)+'</div></div>';
+  }).join('');
+}
+
 async function init() {
-  const [ebtFiles,cftFiles,bbiFiles] = await Promise.all([loadManifest('ebt'),loadManifest('cft'),loadManifest('bbi')]);
+  const [ebtFiles,cftFiles,bbiFiles] = await Promise.all([
+    loadManifest('ebt'), loadManifest('cft'), loadManifest('bbi')
+  ]);
   strips.ebt = ebtFiles.map(f=>({file:f,path:'images/ebt/'+f}));
   strips.cft = cftFiles.map(f=>({file:f,path:'images/cft/'+f}));
   strips.bbi = bbiFiles.map(f=>({file:f,path:'images/bbi/'+f}));
   updateTotalCount();
 
   // swipe support
-  let touchStartX = 0;
-  document.getElementById('sw-frame').addEventListener('touchstart',e=>{touchStartX=e.touches[0].clientX;},{passive:true});
-  document.getElementById('sw-frame').addEventListener('touchend',e=>{
-    const dx = e.changedTouches[0].clientX - touchStartX;
-    if (Math.abs(dx) > 50) { if(dx<0) goNext(); else goPrev(); }
+  let touchStartX=0;
+  const frame=document.getElementById('sw-frame');
+  frame.addEventListener('touchstart',e=>{touchStartX=e.touches[0].clientX;},{passive:true});
+  frame.addEventListener('touchend',e=>{
+    const dx=e.changedTouches[0].clientX-touchStartX;
+    if(Math.abs(dx)>50){if(dx<0)goNext();else goPrev();}
     else openLightbox();
   });
 
@@ -694,7 +676,7 @@ function render() {
   const s=strips[cur];
   const loading=document.getElementById('sw-loading');
   const img=document.getElementById('sw-img');
-  if (s.length===0) {
+  if(s.length===0){
     loading.textContent='No strips yet — check back soon!';
     loading.style.display='block'; img.style.display='none';
     document.getElementById('sw-stitle').textContent='';
@@ -708,8 +690,9 @@ function render() {
   const note=notes[strip.file]||'';
   document.getElementById('sw-stitle').textContent=title;
   document.getElementById('sw-counter').textContent='Strip '+(idx+1)+' of '+s.length;
-  loading.style.display='none'; img.src=strip.path; img.alt=title; img.style.display='block';
-  if (note) {
+  loading.style.display='none';
+  img.src=strip.path; img.alt=title; img.style.display='block';
+  if(note){
     document.getElementById('sw-note-text').textContent=note;
     document.getElementById('sw-note').style.display='block';
   } else {
@@ -719,7 +702,7 @@ function render() {
   document.getElementById('sw-prev').disabled=idx===0;
   document.getElementById('sw-next').disabled=idx===s.length-1;
   document.getElementById('sw-last').disabled=idx===s.length-1;
-  if (archOpen) buildArchive();
+  if(archOpen) buildArchive();
 }
 
 function buildArchive() {
@@ -738,7 +721,12 @@ function goFirst()  { idx=0; render(); }
 function goLatest() { idx=strips[cur].length-1; render(); }
 function goPrev()   { if(idx>0){idx--;render();} }
 function goNext()   { if(idx<strips[cur].length-1){idx++;render();} }
-function goTo(i)    { idx=i; archOpen=false; document.getElementById('sw-archive').classList.remove('open'); document.getElementById('sw-archivelabel').textContent='All Strips'; render(); }
+function goTo(i)    {
+  idx=i; archOpen=false;
+  document.getElementById('sw-archive').classList.remove('open');
+  document.getElementById('sw-archivelabel').textContent='All Strips';
+  render();
+}
 
 function switchSeries(series,el) {
   document.querySelectorAll('.sw-tab').forEach(t=>t.classList.remove('active'));
@@ -781,8 +769,8 @@ function lbPrev(e) { e.stopPropagation(); if(idx>0){idx--;render();openLightbox(
 function lbNext(e) { e.stopPropagation(); if(idx<strips[cur].length-1){idx++;render();openLightbox();} }
 
 function handleShare() {
-  if(navigator.share) { navigator.share({title:'Seeds & Worms',url:window.location.href}); }
-  else { navigator.clipboard&&navigator.clipboard.writeText(window.location.href); alert('Link copied!'); }
+  if(navigator.share){navigator.share({title:'Seeds & Worms — The Daily Chirp',url:window.location.href});}
+  else{navigator.clipboard&&navigator.clipboard.writeText(window.location.href);alert('Link copied!');}
 }
 
 document.addEventListener('keydown',function(e){
