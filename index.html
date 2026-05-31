@@ -237,6 +237,61 @@ html, body {
   margin-bottom: 4px;
 }
 
+/* ── TOTAL COUNT ── */
+.sw-totalcount {
+  text-align: center;
+  padding: 7px 16px;
+  font-family: 'Fredoka One', cursive;
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  color: rgba(255,251,232,0.38);
+  text-transform: uppercase;
+  background: rgba(0,0,0,0.2);
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+
+.sw-totalcount span {
+  color: var(--lime);
+}
+
+/* ── ARCHIVE HEADER + SEARCH ── */
+.sw-archive-header {
+  margin-bottom: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.sw-search {
+  width: 100%;
+  background: rgba(255,255,255,0.08);
+  border: 2px solid rgba(168,232,64,0.3);
+  border-radius: 100px;
+  padding: 8px 16px;
+  font-family: 'Fredoka One', cursive;
+  font-size: 14px;
+  color: var(--cream);
+  outline: none;
+  transition: border-color 0.12s;
+  -webkit-appearance: none;
+}
+
+.sw-search::placeholder {
+  color: rgba(255,251,232,0.35);
+}
+
+.sw-search:focus {
+  border-color: var(--lime);
+}
+
+.sw-no-results {
+  font-family: 'Boogaloo', cursive;
+  font-size: 15px;
+  color: rgba(255,251,232,0.4);
+  text-align: center;
+  padding: 20px 0;
+}
+
 /* ── ARCHIVE ── */
 .sw-archive {
   display: none;
@@ -504,7 +559,7 @@ html, body {
     <button class="sw-tab"        onclick="switchSeries('bbi',this)">&#129504; Bird Brain Ideas</button>
   </div>
 
-  <div class="sw-main">
+  <div class="sw-totalcount" id="sw-totalcount"></div>
     <div class="sw-strip-meta">
       <div class="sw-strip-title" id="sw-stitle"></div>
     </div>
@@ -530,7 +585,10 @@ html, body {
     </div>
 
     <div class="sw-archive" id="sw-archive">
-      <div class="sw-archive-title" id="sw-archivetitle"></div>
+      <div class="sw-archive-header">
+        <div class="sw-archive-title" id="sw-archivetitle"></div>
+        <input class="sw-search" id="sw-search" type="search" placeholder="Search strips..." oninput="filterArchive()" autocomplete="off" />
+      </div>
       <div class="sw-archive-grid" id="sw-archivegrid"></div>
     </div>
   </div>
@@ -576,7 +634,31 @@ const seriesNames = { ebt:"Early Bird Routines", cft:"Chirps for Thought", bbi:"
 let cur='ebt', idx=0, archOpen=false;
 let strips = { ebt:[], cft:[], bbi:[] };
 
-function titleFromFile(f) {
+function updateTotalCount() {
+  const total = strips.ebt.length + strips.cft.length + strips.bbi.length;
+  document.getElementById('sw-totalcount').innerHTML =
+    '<span>' + total + '</span> cartoon' + (total !== 1 ? 's' : '') + ' and counting';
+}
+
+function filterArchive() {
+  const query = document.getElementById('sw-search').value.toLowerCase().trim();
+  const s = strips[cur];
+  const filtered = query
+    ? s.filter(strip => titleFromFile(strip.file).toLowerCase().includes(query))
+    : s;
+  if (filtered.length === 0) {
+    document.getElementById('sw-archivegrid').innerHTML = '<div class="sw-no-results">No strips found for "' + query + '"</div>';
+    return;
+  }
+  document.getElementById('sw-archivegrid').innerHTML = filtered.map((strip) => {
+    const i = s.indexOf(strip);
+    const title = titleFromFile(strip.file);
+    return '<div class="sw-thumb' + (i===idx?' cur':'') + '" onclick="goTo(' + i + ')">'
+      + '<img src="' + strip.path + '" alt="' + title + '" />'
+      + '<div class="sw-thumb-title">' + title + '</div>'
+      + '<div class="sw-thumb-num">#' + (i+1) + '</div></div>';
+  }).join('');
+}
   return f.replace(/\.[^.]+$/,'').split('-').map(w=>w.charAt(0).toUpperCase()+w.slice(1)).join(' ');
 }
 
@@ -594,6 +676,7 @@ async function init() {
   strips.ebt = ebtFiles.map(f=>({file:f,path:'images/ebt/'+f}));
   strips.cft = cftFiles.map(f=>({file:f,path:'images/cft/'+f}));
   strips.bbi = bbiFiles.map(f=>({file:f,path:'images/bbi/'+f}));
+  updateTotalCount();
 
   // swipe support
   let touchStartX = 0;
@@ -663,6 +746,7 @@ function switchSeries(series,el) {
   cur=series; idx=0; archOpen=false;
   document.getElementById('sw-archive').classList.remove('open');
   document.getElementById('sw-archivelabel').textContent='All Strips';
+  document.getElementById('sw-search').value='';
   render();
 }
 
