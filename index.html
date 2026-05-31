@@ -699,6 +699,10 @@
         <div class="zap-label">Why it works</div>
         <span id="outWhyItWorks">–</span>
       </div>
+      <div class="out-zap" style="border-color:#7c3aed; margin-top:10px;" id="humorTechBox">
+        <div class="zap-label">Humor technique</div>
+        <span id="outHumorTech">–</span>
+      </div>
     </div>
 
     <!-- Chirp for Thought -->
@@ -772,10 +776,56 @@
     });
   });
 
+  const HUMOR_DEFINITIONS = {
+    'Irony': {
+      def: 'The intended meaning is the exact opposite of the literal meaning. The surface statement and the real meaning contradict each other.',
+      example: 'Alcoholic father disappointed in pothead son.'
+    },
+    'Wordplay': {
+      def: 'Using words other than their primary function -- switching meanings, rhyming, puns, double entendres, words that mean two things at once.',
+      example: 'Robot charged with battery.'
+    },
+    'Deadpan': {
+      def: 'Delivering an absurd, outrageous, or ridiculous statement with complete seriousness and zero acknowledgment that it is unusual.',
+      example: 'Man calmly explains to news crew why he has been living in a vending machine for three weeks.'
+    },
+    'Hyperbole': {
+      def: 'Exaggerating something to an absurd extreme -- something impossible, something that breaks the laws of science or reality.',
+      example: 'Area woman finally uploads all 12 million pictures of her vacation to Europe on Facebook.'
+    },
+    'Madcap': {
+      def: 'Silly, crazy, wacky nonsense. You go to wacky town. Logic is optional. The more absurd and unhinged the better.',
+      example: 'Hamster thrown from remote control monster truck.'
+    },
+    'Analogy': {
+      def: 'A comparison between two completely unrelated things that reveals something true or funny about both.',
+      example: 'Al Gore places infant son in rocket to escape dying planet.'
+    },
+    'Misplaced Focus': {
+      def: 'You deliberately put your attention on the completely wrong detail -- ignoring the obvious big thing to focus on something trivial.',
+      example: 'Missing boy scout earns publicity badge.'
+    },
+    'Metahumor': {
+      def: 'Humor that makes fun of humor itself, the idea of jokes, or the format of comedy.',
+      example: 'Comedians no longer able to write jokes longer than 140 characters.'
+    }
+  };
+
   function buildPrompt() {
     const freeform = document.getElementById('freeformInput').value.trim();
     const series = selectedSeries || 'Honestly Though';
-    const humor = selectedHumor.length > 0 ? selectedHumor.join(', ') : 'random mix -- your call';
+
+    // Build humor instruction block with full definitions
+    let humorBlock;
+    if (selectedHumor.length === 0) {
+      humorBlock = `HUMOR APPROACH: No filter selected -- choose the approach that best fits the panel naturally. Any of the following techniques are available: Irony, Wordplay, Deadpan, Hyperbole, Madcap, Analogy, Misplaced Focus, Metahumor.`;
+    } else {
+      const defs = selectedHumor.map(h => {
+        const d = HUMOR_DEFINITIONS[h];
+        return d ? `  ${h.toUpperCase()}: ${d.def}\n  Example of this type: "${d.example}"` : `  ${h.toUpperCase()}`;
+      }).join('\n\n');
+      humorBlock = `HUMOR APPROACH: The panel MUST use the following humor technique${selectedHumor.length > 1 ? 's' : ''} -- this is not optional, it is a structural requirement of the gag:\n\n${defs}\n\nThe humor technique must be visible and deliberate in the panel. If someone read the output, they should be able to identify which technique is being used. Do not just gesture at the style -- commit to it fully.`;
+    }
 
     const charInstructions = {
       'Both': `CHARACTERS IN THIS PANEL: Both Baker Bird and Bug appear together. Standard dynamic applies -- Baker Bird opens, Bug reacts.`,
@@ -1118,7 +1168,7 @@ Showing up anyway. Trying again after it did not work. Believing in something wh
 == FORMAT: SINGLE-PANEL ONLY ==
 One frozen moment. One image. The Far Side is the model. NOT sequential panels.
 The visual and the text create the joke TOGETHER.
-HUMOR STYLE: ${humor}
+${humorBlock}
 ${freeform ? 'WRITER DIRECTION: ' + freeform : ''}
 
 Respond ONLY with valid JSON. No markdown, no preamble:
@@ -1135,6 +1185,7 @@ Respond ONLY with valid JSON. No markdown, no preamble:
   ],
   "dialogue_note": "${dialogueNote}",
   "why_it_works": "Why this makes people feel seen -- one sentence.",
+  "humor_technique": "Which humor technique was used and one sentence on exactly how it appears in this panel.",
   "chirp": "Bottom-of-panel line. Under 15 words. Quotable alone.",
   "tags": ["tag1", "tag2"]
 }`
@@ -1196,6 +1247,16 @@ Respond ONLY with valid JSON. No markdown, no preamble:
     document.getElementById('outScene').textContent = d.panel_description || '';
     document.getElementById('outVisualGag').textContent = d.visual_gag || '';
     document.getElementById('outWhyItWorks').textContent = d.why_it_works || '';
+    // Show humor technique if present
+    const humorTechEl = document.getElementById('outHumorTech');
+    if (humorTechEl) {
+      if (d.humor_technique) {
+        humorTechEl.textContent = d.humor_technique;
+        humorTechEl.parentElement.style.display = 'block';
+      } else {
+        humorTechEl.parentElement.style.display = 'none';
+      }
+    }
     document.getElementById('outChirp').textContent = d.chirp || '';
 
     // Dynamic chirp subtitle based on series
