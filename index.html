@@ -1,784 +1,2213 @@
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Seeds &amp; Worms Generator | Chirps for Thought</title>
 <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;700;900&family=Boogaloo&display=swap" rel="stylesheet">
-
 <style>
-:root {
-  --pink:   #f03e8c;
-  --yellow: #ffe535;
-  --dark:   #1a1228;
-  --cream:  #fffbe8;
-  --white:  #ffffff;
-  --lime:   #a8e840;
-}
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+  :root {
+    --bg:         #2a1a4a;
+    --bg2:        #1e1038;
+    --lime:       #c8f000;
+    --pink:       #f03e8c;
+    --pink-dark:  #c4006e;
+    --yellow:     #ffe535;
+    --teal:       #2cbfb0;
+    --orange:     #ff7c2a;
+    --cream:      #fffbe8;
+    --white:      #ffffff;
+    --card-bg:    #b8e000;
+    --card-shadow:#d4006a;
+    --dark-text:  #1a0a2e;
+  }
 
-html, body {
-  background: radial-gradient(ellipse at 50% 38%, #5a2080 0%, #3a1060 30%, #1a0535 65%, #0d0220 100%);
-  background-attachment: fixed;
-  min-height: 100%;
-  font-size: 16px;
-}
+  html {
+    background-color: #1a0f33;   /* opaque deep dark base -- always covers */
+    color-scheme: dark;
+  }
 
-.sw-wrap {
-  background: radial-gradient(ellipse at 50% 38%, #5a2080 0%, #3a1060 30%, #1a0535 65%, #0d0220 100%);
-  overflow: hidden;
-  font-family: 'Nunito', sans-serif;
-  color: var(--cream);
-  width: 100%;
-  max-width: 760px;
-  margin: 0 auto;
-  padding: 0 0 20px;
-}
+  html, body { min-height: 100%; }
 
-/* HERO */
-.sw-hero {
-  background-image: linear-gradient(135deg, #3d1a6e 0%, #6a3daa 60%, #9b2db5 100%);
-  padding: 22px 16px 18px;
-  text-align: center;
-  border-bottom: 4px solid var(--yellow);
-}
+  body {
+    background-color: #1a0f33;   /* flat deep dark purple -- no light areas, no white */
+    background-attachment: fixed;
+    min-height: 100vh;
+    font-family: 'Nunito', sans-serif;
+    color: var(--cream);
+  }
 
-.sw-eyebrow {
-  display: inline-block;
-  background: var(--pink);
-  color: var(--white);
-  font-family: 'Fredoka One', cursive;
-  font-size: 11px;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  padding: 4px 14px;
-  border-radius: 100px;
-  border: 2px solid var(--white);
-  margin-bottom: 10px;
-}
+  /* ── PAGE WRAPPER ── */
+  .page {
+    max-width: 820px;
+    margin: 0 auto;
+    padding: 32px 20px 48px;
+  }
 
-.sw-hero-title {
-  font-family: 'Fredoka One', cursive;
-  font-size: clamp(36px, 9vw, 56px);
-  line-height: 1.0;
-  color: var(--yellow);
-  text-shadow: 3px 3px 0 rgba(0,0,0,0.35);
-  margin-bottom: 4px;
-}
+  /* ── TOP BADGE ── */
+  .top-badge {
+    text-align: center;
+    margin-bottom: 18px;
+  }
 
-.sw-hero-sub {
-  font-family: 'Fredoka One', cursive;
-  font-size: clamp(18px, 4.5vw, 30px);
-  color: var(--lime);
-  text-shadow: 2px 2px 0 rgba(0,0,0,0.3);
-  margin-bottom: 10px;
-}
+  .top-badge span {
+    display: inline-block;
+    font-family: 'Fredoka One', cursive;
+    font-size: 12px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--cream);
+    border: 2.5px solid var(--pink);
+    border-radius: 100px;
+    padding: 6px 20px;
+    background: rgba(240,62,140,0.15);
+  }
 
-.sw-hero-desc {
-  font-family: 'Boogaloo', cursive;
-  font-size: clamp(14px, 3.8vw, 17px);
-  color: rgba(255,255,255,0.78);
-  line-height: 1.5;
-  max-width: 560px;
-  margin: 0 auto;
-}
+  /* ── HERO TITLE ── */
+  .hero-title {
+    text-align: center;
+    margin-bottom: 10px;
+    line-height: 0.92;
+  }
 
-.sw-hero-desc em { color: var(--lime); font-style: normal; }
+  .hero-title .line1 {
+    display: block;
+    font-family: 'Fredoka One', cursive;
+    font-size: clamp(52px, 12vw, 96px);
+    color: var(--yellow);
+    text-shadow:
+      4px 4px 0 #b35a00,
+      -2px -2px 0 #b35a00,
+      2px -2px 0 #b35a00,
+      -2px 2px 0 #b35a00,
+      0 6px 0 rgba(0,0,0,0.5);
+    letter-spacing: -0.01em;
+  }
 
-/* TABS */
-.sw-tabs {
-  display: flex;
-  gap: 6px;
-  padding: 12px 10px;
-  background: rgba(0,0,0,0.3);
-  justify-content: center;
-  flex-wrap: wrap;
-  border-bottom: 2px solid rgba(255,255,255,0.08);
-}
+  .hero-title .line2 {
+    display: block;
+    font-family: 'Fredoka One', cursive;
+    font-size: clamp(42px, 10vw, 80px);
+    color: var(--lime);
+    text-shadow:
+      3px 3px 0 #4a6600,
+      -2px -2px 0 #4a6600,
+      2px -2px 0 #4a6600,
+      -2px 2px 0 #4a6600,
+      0 5px 0 rgba(0,0,0,0.5);
+    letter-spacing: -0.01em;
+  }
 
-.sw-tab {
-  background: rgba(255,255,255,0.06);
-  border: 2px solid rgba(106,61,170,0.7);
-  border-radius: 100px;
-  padding: 8px 16px;
-  font-family: 'Fredoka One', cursive;
-  font-size: clamp(12px, 3vw, 14px);
-  letter-spacing: 0.03em;
-  color: rgba(255,251,232,0.7);
-  cursor: pointer;
-  white-space: nowrap;
-  transition: all 0.15s;
-  min-height: 44px;
-  display: flex;
-  align-items: center;
-}
+  .hero-tagline {
+    text-align: center;
+    font-family: 'Fredoka One', cursive;
+    font-size: clamp(18px, 4vw, 26px);
+    color: var(--orange, #ff7c2a);
+    letter-spacing: 0.03em;
+    margin-bottom: 6px;
+    text-shadow: 2px 2px 0 rgba(0,0,0,0.25);
+  }
 
-.sw-tab.active {
-  background: var(--lime);
-  border-color: var(--lime);
-  color: #1a3a00;
-}
+  .hero-sub {
+    text-align: center;
+    font-family: 'Boogaloo', cursive;
+    font-size: clamp(16px, 3.5vw, 22px);
+    color: var(--teal);
+    margin-bottom: 6px;
+    letter-spacing: 0.02em;
+  }
 
-/* TOTAL COUNT */
-.sw-totalcount {
-  text-align: center;
-  padding: 6px 16px;
-  font-family: 'Fredoka One', cursive;
-  font-size: 12px;
-  letter-spacing: 0.06em;
-  color: rgba(255,251,232,0.38);
-  text-transform: uppercase;
-  background: rgba(0,0,0,0.2);
-  border-bottom: 1px solid rgba(255,255,255,0.06);
-}
+  .hero-byline {
+    text-align: center;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 700;
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgba(255,251,232,0.45);
+    margin-bottom: 22px;
+  }
 
-.sw-totalcount span { color: var(--lime); }
+  /* ── WORM DIVIDER ── */
+  .worm-row {
+    text-align: center;
+    font-size: 22px;
+    margin-bottom: 28px;
+    letter-spacing: 4px;
+    opacity: 0.7;
+  }
 
-/* MAIN CARD */
-.sw-main {
-  background: rgba(255,255,255,0.04);
-  border: 2px solid rgba(168,232,64,0.3);
-  border-radius: 12px;
-  margin: 12px 10px 0;
-  overflow: hidden;
-}
+  /* ── MAIN CARD ── */
+  .main-card {
+    background: var(--card-bg);
+    border-radius: 20px;
+    box-shadow: 8px 8px 0 var(--card-shadow);
+    padding: 28px 28px 32px;
+    margin-bottom: 8px;
+  }
 
-.sw-strip-meta {
-  padding: 12px 14px 8px;
-  border-bottom: 2px solid rgba(255,255,255,0.08);
-}
+  /* ── CARD EYEBROW ── */
+  .card-eyebrow {
+    font-family: 'Fredoka One', cursive;
+    font-size: 12px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--dark-text);
+    opacity: 0.6;
+    text-align: center;
+    margin-bottom: 16px;
+  }
 
-.sw-strip-title {
-  font-family: 'Fredoka One', cursive;
-  font-size: clamp(15px, 4.5vw, 22px);
-  color: var(--yellow);
-  text-shadow: 2px 2px 0 rgba(0,0,0,0.3);
-}
+  /* ── SECTION LABEL ── */
+  .section-label {
+    font-family: 'Nunito', sans-serif;
+    font-weight: 700;
+    font-size: 15px;
+    color: var(--dark-text);
+    margin-bottom: 10px;
+  }
 
-/* COMIC FRAME */
-.sw-frame {
-  background: #fffdf0;
-  border-bottom: 3px solid var(--dark);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: zoom-in;
-  position: relative;
-  padding: 0;
-  width: 100%;
-  overflow: hidden;
-}
+  /* ── TEXT INPUT ── */
+  .topic-input {
+    font-family: 'Nunito', sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    width: 100%;
+    padding: 14px 18px;
+    border-radius: 12px;
+    border: none;
+    background: var(--cream);
+    color: var(--dark-text);
+    outline: none;
+    margin-bottom: 20px;
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
+    -webkit-text-size-adjust: 100%;
+    touch-action: manipulation;
+  }
 
-.sw-frame img {
-  width: 100%;
-  height: auto;
-  display: block;
-  object-fit: contain;
-}
+  .topic-input::placeholder { color: rgba(26,10,46,0.35); }
+  .topic-input:focus { box-shadow: inset 0 2px 4px rgba(0,0,0,0.1), 0 0 0 3px rgba(240,62,140,0.35); }
 
-.sw-expand-hint {
-  position: absolute;
-  bottom: 8px;
-  right: 8px;
-  background: rgba(26,18,40,0.82);
-  color: var(--lime);
-  font-family: 'Fredoka One', cursive;
-  font-size: 10px;
-  letter-spacing: 0.08em;
-  padding: 3px 9px;
-  border-radius: 100px;
-  border: 1.5px solid rgba(168,232,64,0.4);
-  pointer-events: none;
-  text-transform: uppercase;
-  z-index: 2;
-}
+  /* ── FILTER SECTION ── */
+  .filter-label {
+    font-family: 'Nunito', sans-serif;
+    font-weight: 700;
+    font-size: 14px;
+    color: var(--dark-text);
+    margin-bottom: 10px;
+  }
 
-.sw-loading {
-  font-family: 'Fredoka One', cursive;
-  font-size: 15px;
-  color: rgba(255,251,232,0.4);
-  text-align: center;
-  padding: 60px 20px;
-}
+  .filter-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 20px;
+  }
 
-/* ACTIONS */
-.sw-actions {
-  display: flex;
-  gap: 8px;
-  padding: 10px 14px;
-  border-bottom: 2px solid rgba(255,255,255,0.08);
-}
+  /* Mood pills */
+  .mood-btn {
+    font-family: 'Fredoka One', cursive;
+    font-size: 13px;
+    padding: 7px 16px;
+    border-radius: 100px;
+    border: 2.5px solid var(--dark-text);
+    background: var(--white);
+    color: var(--dark-text);
+    cursor: pointer;
+    transition: all 0.12s ease;
+    user-select: none;
+    box-shadow: 2px 2px 0 rgba(0,0,0,0.2);
+  }
 
-.sw-action-btn {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 5px;
-  background: rgba(255,255,255,0.06);
-  border: 2px solid rgba(168,232,64,0.3);
-  border-radius: 100px;
-  padding: 0 18px;
-  font-family: 'Fredoka One', cursive;
-  font-size: clamp(12px, 3.5vw, 14px);
-  letter-spacing: 0.04em;
-  color: var(--cream);
-  cursor: pointer;
-  transition: all 0.12s;
-  min-height: 44px;
-}
+  .mood-btn:hover {
+    background: var(--pink);
+    border-color: var(--pink-dark);
+    color: var(--white);
+    transform: translate(-1px, -1px);
+    box-shadow: 3px 3px 0 rgba(0,0,0,0.25);
+  }
 
-.sw-action-btn:active {
-  background: rgba(168,232,64,0.2);
-  border-color: var(--lime);
-  color: var(--lime);
-}
+  .mood-btn.active {
+    background: var(--pink);
+    border-color: var(--pink-dark);
+    color: var(--white);
+    transform: translate(-1px, -1px);
+    box-shadow: 3px 3px 0 rgba(0,0,0,0.25);
+  }
 
-/* MORGAN'S NOTE */
-.sw-note {
-  background: rgba(0,0,0,0.32);
-  border-left: 4px solid var(--lime);
-  border-radius: 8px;
-  padding: 10px 14px;
-  margin: 10px 14px 0;
-  font-family: 'Boogaloo', cursive;
-  font-size: clamp(15px, 4vw, 17px);
-  color: var(--cream);
-  line-height: 1.5;
-  display: none;
-}
+  /* Humor pills */
+  .humor-btn {
+    font-family: 'Fredoka One', cursive;
+    font-size: 13px;
+    padding: 7px 16px;
+    border-radius: 100px;
+    border: 2.5px solid var(--dark-text);
+    background: var(--white);
+    color: var(--dark-text);
+    cursor: pointer;
+    transition: all 0.12s ease;
+    user-select: none;
+    box-shadow: 2px 2px 0 rgba(0,0,0,0.2);
+  }
 
-.sw-note-label {
-  font-family: 'Fredoka One', cursive;
-  font-size: 10px;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  opacity: 0.55;
-  margin-bottom: 4px;
-}
+  .humor-btn:hover {
+    background: #7c3aed;
+    border-color: #5b21b6;
+    color: var(--white);
+    transform: translate(-1px, -1px);
+    box-shadow: 3px 3px 0 rgba(0,0,0,0.25);
+  }
 
-/* ARCHIVE */
-.sw-archive {
-  display: none;
-  margin: 10px 14px 0;
-  background: rgba(0,0,0,0.28);
-  border: 2px solid rgba(168,232,64,0.25);
-  border-radius: 10px;
-  padding: 12px;
-}
+  .humor-btn.active {
+    background: #7c3aed;
+    border-color: #5b21b6;
+    color: var(--white);
+    transform: translate(-1px, -1px);
+    box-shadow: 3px 3px 0 rgba(0,0,0,0.25);
+  }
 
-.sw-archive.open { display: block; }
+  /* ── CHARACTER SELECTOR ── */
+  .char-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 4px;
+  }
 
-.sw-archive-header {
-  margin-bottom: 10px;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
+  .char-btn {
+    font-family: 'Fredoka One', cursive;
+    font-size: 13px;
+    padding: 7px 16px;
+    border-radius: 100px;
+    border: 2.5px solid var(--yellow);
+    background: rgba(26,10,46,0.82);
+    color: var(--yellow);
+    cursor: pointer;
+    transition: all 0.12s ease;
+    user-select: none;
+    box-shadow: 2px 2px 0 rgba(0,0,0,0.25);
+  }
 
-.sw-archive-title {
-  font-family: 'Fredoka One', cursive;
-  font-size: 15px;
-  color: var(--yellow);
-}
+  .char-btn:hover {
+    border-color: var(--yellow);
+    color: var(--dark-text);
+    background: var(--yellow);
+    transform: translate(-1px,-1px);
+    box-shadow: 3px 3px 0 rgba(0,0,0,0.25);
+  }
 
-.sw-search {
-  width: 100%;
-  background: rgba(255,255,255,0.08);
-  border: 2px solid rgba(168,232,64,0.3);
-  border-radius: 100px;
-  padding: 8px 16px;
-  font-family: 'Fredoka One', cursive;
-  font-size: 14px;
-  color: var(--cream);
-  outline: none;
-  -webkit-appearance: none;
-}
+  .char-btn.active {
+    background: var(--yellow);
+    color: var(--dark-text);
+    border-color: var(--yellow);
+    transform: translate(-1px,-1px);
+    box-shadow: 3px 3px 0 rgba(0,0,0,0.25);
+  }
 
-.sw-search::placeholder { color: rgba(255,251,232,0.35); }
-.sw-search:focus { border-color: var(--lime); }
+  /* ── DIVIDER LINE ── */
+  .card-rule {
+    border: none;
+    border-top: 2px dashed rgba(26,10,46,0.2);
+    margin: 4px 0 20px;
+  }
 
-.sw-no-results {
-  font-family: 'Boogaloo', cursive;
-  font-size: 15px;
-  color: rgba(255,251,232,0.4);
-  text-align: center;
-  padding: 20px 0;
-}
+  /* ── GENERATE BUTTON ── */
+  .generate-btn {
+    font-family: 'Fredoka One', cursive;
+    font-size: 22px;
+    letter-spacing: 0.06em;
+    width: 100%;
+    padding: 18px 28px;
+    border-radius: 14px;
+    border: none;
+    background: var(--pink);
+    color: var(--white);
+    cursor: pointer;
+    box-shadow: 0 6px 0 var(--pink-dark);
+    position: relative;
+    top: 0;
+    transition: all 0.1s ease;
+    text-shadow: 1px 1px 0 rgba(0,0,0,0.25);
+  }
 
-.sw-archive-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
-  gap: 8px;
-}
+  .generate-btn:hover:not(:disabled) {
+    top: -3px;
+    box-shadow: 0 9px 0 var(--pink-dark);
+  }
 
-.sw-thumb {
-  background: rgba(255,255,255,0.05);
-  border: 2px solid rgba(106,61,170,0.5);
-  border-radius: 8px;
-  padding: 5px;
-  cursor: pointer;
-  text-align: center;
-  transition: all 0.12s;
-}
+  .generate-btn:active:not(:disabled) {
+    top: 4px;
+    box-shadow: 0 2px 0 var(--pink-dark);
+  }
 
-.sw-thumb:active, .sw-thumb.cur {
-  background: rgba(168,232,64,0.12);
-  border-color: var(--lime);
-}
+  .generate-btn:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+    top: 0;
+  }
 
-.sw-thumb img {
-  width: 100%;
-  height: 64px;
-  object-fit: cover;
-  border-radius: 4px;
-  display: block;
-  margin-bottom: 4px;
-}
+  /* ── LOADING BAR ── */
+  .loading-bar {
+    height: 4px;
+    background: rgba(26,10,46,0.15);
+    border-radius: 4px;
+    overflow: hidden;
+    margin-top: 14px;
+    display: none;
+  }
 
-.sw-thumb-title {
-  font-family: 'Fredoka One', cursive;
-  font-size: 10px;
-  color: var(--cream);
-  line-height: 1.3;
-}
+  .loading-bar.active { display: block; }
 
-.sw-thumb-num {
-  font-family: 'Nunito', sans-serif;
-  font-size: 9px;
-  color: rgba(255,251,232,0.4);
-  margin-top: 2px;
-}
+  .loading-bar::after {
+    content: '';
+    display: block;
+    height: 100%;
+    width: 40%;
+    background: var(--pink);
+    border-radius: 4px;
+    animation: barScroll 1.2s ease-in-out infinite;
+  }
 
-/* COUNTER */
-.sw-counter {
-  text-align: center;
-  padding: 8px 0 4px;
-  font-family: 'Fredoka One', cursive;
-  font-size: 11px;
-  letter-spacing: 1px;
-  color: rgba(255,251,232,0.3);
-  text-transform: uppercase;
-}
+  @keyframes barScroll {
+    0%   { transform: translateX(-200%); }
+    100% { transform: translateX(400%); }
+  }
 
-/* NAV BAR */
-.sw-nav {
-  background: rgba(0,0,0,0.3);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 10px 14px;
-  margin: 0 10px;
-  border-radius: 0 0 12px 12px;
-  border: 2px solid rgba(168,232,64,0.2);
-  border-top: none;
-}
+  /* ── ERROR ── */
+  .error-box {
+    background: rgba(240,62,140,0.15);
+    border: 2px solid var(--pink-dark);
+    border-radius: 10px;
+    padding: 12px 16px;
+    margin-top: 14px;
+    color: var(--dark-text);
+    font-family: 'Nunito', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    display: none;
+  }
 
-.sw-nav-btn {
-  background: rgba(255,255,255,0.06);
-  border: 2px solid rgba(106,61,170,0.6);
-  border-radius: 50%;
-  width: 46px; height: 46px;
-  display: flex; align-items: center; justify-content: center;
-  color: var(--lime);
-  cursor: pointer;
-  font-size: 22px;
-  font-family: 'Fredoka One', cursive;
-  line-height: 1;
-  touch-action: manipulation;
-}
+  .error-box.visible { display: block; }
 
-.sw-nav-btn:active:not([disabled]) {
-  background: rgba(168,232,64,0.2);
-  border-color: var(--lime);
-  transform: scale(0.94);
-}
+  /* ── OUTPUT AREA ── */
+  #output-area { display: none; }
 
-.sw-nav-btn[disabled] { opacity: 0.2; cursor: default; }
+  #output-area.visible {
+    display: block;
+    animation: fadeUp 0.35s ease forwards;
+  }
 
-.sw-nav-center {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(14px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
 
-.sw-nav-end {
-  background: none;
-  border: none;
-  font-family: 'Fredoka One', cursive;
-  font-size: 13px;
-  letter-spacing: 1px;
-  color: var(--lime);
-  cursor: pointer;
-  opacity: 0.65;
-  text-transform: uppercase;
-  min-height: 44px;
-  display: flex;
-  align-items: center;
-  padding: 0 4px;
-}
+  /* ── OUTPUT CARDS ── */
+  .out-card {
+    background: rgba(255,255,255,0.06);
+    border: 2.5px solid rgba(255,251,232,0.15);
+    border-radius: 16px;
+    padding: 22px 24px 20px;
+    margin-bottom: 16px;
+  }
 
-.sw-nav-end:active { opacity: 1; }
+  .out-pill {
+    display: inline-block;
+    font-family: 'Fredoka One', cursive;
+    font-size: 11px;
+    letter-spacing: 1.6px;
+    text-transform: uppercase;
+    border-radius: 100px;
+    padding: 4px 14px;
+    border: 2px solid;
+    margin-bottom: 8px;
+  }
 
-/* LIGHTBOX */
-.sw-lightbox {
-  display: none;
-  position: fixed;
-  inset: 0;
-  z-index: 9999;
-  background: rgba(10,4,22,0.98);
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  padding: 16px;
-  gap: 14px;
-}
+  .pill-teal  { color: var(--teal);   border-color: var(--teal); }
+  .pill-pink  { color: var(--pink);   border-color: var(--pink); }
+  .pill-yellow{ color: var(--yellow); border-color: var(--yellow); }
 
-.sw-lightbox.open { display: flex; }
+  .out-title {
+    font-family: 'Fredoka One', cursive;
+    font-size: 22px;
+    color: var(--cream);
+    margin-bottom: 4px;
+    line-height: 1.2;
+  }
 
-.sw-lightbox-title {
-  font-family: 'Fredoka One', cursive;
-  font-size: clamp(16px, 4.5vw, 24px);
-  color: var(--yellow);
-  text-align: center;
-  padding: 0 10px;
-}
+  .out-sub {
+    font-family: 'Boogaloo', cursive;
+    font-size: 14px;
+    color: rgba(255,251,232,0.45);
+    margin-bottom: 14px;
+  }
 
-.sw-lightbox-img {
-  max-width: 100%;
-  max-height: 70vh;
-  width: 100%;
-  object-fit: contain;
-  display: block;
-  border-radius: 8px;
-}
+  .out-body {
+    font-family: 'Nunito', sans-serif;
+    font-size: 16px;
+    color: var(--cream);
+    line-height: 1.7;
+  }
 
-.sw-lightbox-nav {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-}
+  .out-zap {
+    background: rgba(0,0,0,0.3);
+    border-left: 4px solid;
+    border-radius: 8px;
+    padding: 11px 15px;
+    margin-top: 16px;
+    font-family: 'Boogaloo', cursive;
+    font-size: 17px;
+    color: var(--cream);
+    line-height: 1.5;
+  }
 
-.sw-lightbox-arrow {
-  background: rgba(255,255,255,0.08);
-  border: 2px solid rgba(168,232,64,0.4);
-  border-radius: 50%;
-  width: 50px; height: 50px;
-  display: flex; align-items: center; justify-content: center;
-  color: var(--lime);
-  font-size: 26px;
-  cursor: pointer;
-  font-family: 'Fredoka One', cursive;
-  line-height: 1;
-  touch-action: manipulation;
-}
+  .zap-label {
+    font-family: 'Fredoka One', cursive;
+    font-size: 9px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    opacity: 0.5;
+    margin-bottom: 4px;
+  }
 
-.sw-lightbox-arrow:active { background: rgba(168,232,64,0.18); }
-.sw-lightbox-arrow[disabled] { opacity: 0.18; cursor: default; }
+  /* Chirp card -- yellow gravity pull */
+  .chirp-card {
+    background: linear-gradient(135deg, #2a1050 0%, #3d1a6e 50%, #5c2498 100%);
+    border: 2.5px solid var(--yellow);
+    border-radius: 16px;
+    padding: 22px 24px 20px;
+    margin-bottom: 16px;
+  }
 
-.sw-lightbox-close {
-  background: var(--pink);
-  border: 3px solid white;
-  border-radius: 100px;
-  padding: 10px 28px;
-  font-family: 'Fredoka One', cursive;
-  font-size: 15px;
-  color: white;
-  cursor: pointer;
-  min-height: 48px;
-  touch-action: manipulation;
-}
+  .chirp-card .out-title { color: var(--yellow); }
 
-/* FOOTER */
-.sw-footer {
-  text-align: center;
-  padding: 14px 16px 4px;
-  font-family: 'Fredoka One', cursive;
-  font-size: 10px;
-  letter-spacing: 0.08em;
-  color: rgba(255,251,232,0.28);
-  text-transform: uppercase;
-}
+  .chirp-zap {
+    background: rgba(0,0,0,0.38);
+    border-left: 4px solid var(--yellow);
+    border-radius: 8px;
+    padding: 14px 16px;
+    margin-top: 16px;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 900;
+    font-size: 18px;
+    color: var(--cream);
+    line-height: 1.5;
+  }
 
-.sw-footer a { color: rgba(168,232,64,0.55); text-decoration: none; }
+  /* ── DIALOGUE LINES ── */
+  .dialogue-block { display: flex; flex-direction: column; gap: 12px; }
 
-/* DESKTOP */
-@media (min-width: 600px) {
-  .sw-hero    { padding: 36px 28px 28px; }
-  .sw-main    { margin: 16px 16px 0; border-radius: 14px; }
-  .sw-nav     { margin: 0 16px; padding: 10px 20px; }
-  .sw-strip-meta { padding: 14px 18px 10px; }
-  .sw-actions { padding: 12px 18px; }
-  .sw-note    { margin: 12px 18px 0; padding: 12px 16px; }
-  .sw-archive { margin: 12px 18px 0; }
-  .sw-archive-grid { grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); }
-  .sw-thumb img { height: 70px; }
-  .sw-nav-btn { width: 40px; height: 40px; font-size: 20px; }
-  .sw-tab     { font-size: 14px; min-height: unset; }
-  .sw-wrap    { border-radius: 16px; }
-}
+  .dialogue-line {
+    display: grid;
+    grid-template-columns: 108px 1fr;
+    gap: 12px;
+    align-items: baseline;
+  }
+
+  .char-name {
+    font-family: 'Fredoka One', cursive;
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .char-name.baker  { color: var(--orange); }
+  .char-name.bug    { color: #b8e000; }
+  .char-name.cap    { color: rgba(255,251,232,0.4); }
+
+  .char-line {
+    font-family: 'Boogaloo', cursive;
+    font-size: 20px;
+    color: var(--cream);
+    line-height: 1.45;
+  }
+
+  /* ── TAG ROW ── */
+  .tag-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+    margin-top: 14px;
+  }
+
+  .tag {
+    font-family: 'Fredoka One', cursive;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    padding: 4px 12px;
+    border-radius: 100px;
+    border: 2px solid rgba(255,251,232,0.18);
+    color: rgba(255,251,232,0.4);
+  }
+
+  /* ── ACTION BUTTONS ── */
+  .action-row {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 8px;
+  }
+
+  .action-btn {
+    font-family: 'Fredoka One', cursive;
+    font-size: 15px;
+    padding: 11px 24px;
+    border-radius: 10px;
+    border: 2.5px solid rgba(255,251,232,0.3);
+    background: rgba(255,255,255,0.07);
+    color: var(--cream);
+    cursor: pointer;
+    transition: all 0.12s ease;
+    box-shadow: 0 4px 0 rgba(0,0,0,0.3);
+    position: relative;
+    top: 0;
+  }
+
+  .action-btn:hover {
+    border-color: var(--yellow);
+    color: var(--yellow);
+    top: -2px;
+    box-shadow: 0 6px 0 rgba(0,0,0,0.3);
+  }
+
+  .action-btn:active {
+    top: 3px;
+    box-shadow: 0 1px 0 rgba(0,0,0,0.3);
+  }
+
+  .copy-confirm {
+    font-family: 'Fredoka One', cursive;
+    font-size: 13px;
+    color: #b8e000;
+    align-self: center;
+    letter-spacing: 0.08em;
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  .copy-confirm.show { opacity: 1; }
+
+  /* ── FOOTER ── */
+  .site-footer {
+    text-align: center;
+    padding-top: 24px;
+    font-family: 'Fredoka One', cursive;
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    color: rgba(255,251,232,0.28);
+  }
+
+  .footer-tagline {
+    display: inline-block;
+    font-size: 15px;
+    color: var(--orange, #ff7c2a);
+    letter-spacing: 0.04em;
+    margin-bottom: 10px;
+    opacity: 0.85;
+  }
+
+  .site-footer a {
+    color: var(--teal);
+    text-decoration: none;
+    transition: color 0.15s;
+  }
+
+  .site-footer a:hover { color: var(--yellow); }
+
+  @media (max-width: 540px) {
+    .main-card { padding: 20px 18px 24px; }
+    .hero-title .line1 { font-size: 48px; }
+    .hero-title .line2 { font-size: 40px; }
+    .generate-btn { font-size: 18px; padding: 15px; }
+    .dialogue-line { grid-template-columns: 84px 1fr; }
+    .char-line { font-size: 17px; }
+    .action-row { flex-direction: column; }
+  }
+
+  /* ── ROUTINE OF THE DAY (Early Bird) ── */
+  .bb-chip-label {
+    font-family: 'Nunito', sans-serif; font-weight: 700; font-size: 12px;
+    letter-spacing: 0.06em; text-transform: uppercase;
+    color: rgba(255,251,232,0.55); margin-bottom: 8px;
+  }
+  .bb-chip-row { display: flex; flex-wrap: wrap; gap: 7px; margin-bottom: 14px; }
+  .bb-chip {
+    font-family: 'Nunito', sans-serif; font-weight: 700; font-size: 12.5px;
+    padding: 7px 13px; border-radius: 100px; cursor: pointer;
+    border: 2px solid rgba(255,206,90,0.55);
+    background: rgba(255,206,90,0.10); color: var(--cream);
+    transition: all 0.12s ease;
+  }
+  .bb-chip:hover { border-color: #ffce5a; background: rgba(255,206,90,0.18); }
+  .bb-chip.active {
+    background: linear-gradient(180deg, #ffd76b, #ffb347);
+    border-color: #ffb347; color: #4a3500;
+  }
+  .bb-routine-btn {
+    font-family: 'Fredoka One', cursive;
+    font-size: 16px; letter-spacing: 0.03em;
+    width: 100%; padding: 14px 20px; border-radius: 14px; border: none;
+    color: #4a3500; cursor: pointer;
+    background: linear-gradient(180deg, #ffd76b, #ffb347);
+    box-shadow: 0 5px 0 #c8870f; position: relative; top: 0;
+    transition: all 0.1s ease;
+  }
+  .bb-routine-btn:hover { top: -2px; box-shadow: 0 7px 0 #c8870f; }
+  .bb-routine-btn:active { top: 4px; box-shadow: 0 1px 0 #c8870f; }
+  .bb-routine-hint {
+    font-family: 'Nunito', sans-serif; font-size: 12.5px; line-height: 1.4;
+    color: rgba(255,251,232,0.55); margin-top: 8px; text-align: center;
+  }
+
+  /* ── TRY THIS (Early Bird output) ── */
+  .try-this-card {
+    background: linear-gradient(180deg, rgba(255,215,107,0.16), rgba(255,179,71,0.10));
+    border: 2.5px solid #ff9d3a;
+    border-radius: 16px; padding: 18px 20px; margin-bottom: 16px;
+    display: none;
+  }
+  .try-this-card.visible { display: block; }
+  .try-this-label {
+    font-family: 'Fredoka One', cursive; font-size: 13px; letter-spacing: 0.12em;
+    text-transform: uppercase; color: #ffce5a; margin-bottom: 8px;
+    display: flex; align-items: center; gap: 7px;
+  }
+  .try-this-text {
+    font-family: 'Boogaloo', cursive; font-size: 22px; line-height: 1.35; color: var(--cream);
+  }
+  .try-this-well {
+    font-family: 'Nunito', sans-serif; font-weight: 700; font-size: 10.5px;
+    letter-spacing: 0.08em; text-transform: uppercase; color: #4a3500;
+    background: linear-gradient(180deg, #ffd76b, #ffb347);
+    padding: 2px 9px; border-radius: 100px; margin-left: 4px;
+  }
+
+  /* ════════════════════════════════════════════════════
+     BIZARRE MODE  — separate, contained section.
+     Its own toggle, card, state, prompt, output. Nothing
+     here shares state with Seeds & Worms.
+     ════════════════════════════════════════════════════ */
+
+  /* ── MODE TOGGLE ── */
+  .mode-toggle {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 26px;
+    flex-wrap: wrap;
+  }
+  .mode-tab {
+    font-family: 'Fredoka One', cursive;
+    font-size: 15px;
+    letter-spacing: 0.04em;
+    padding: 11px 26px;
+    border-radius: 100px;
+    border: 2.5px solid rgba(255,251,232,0.2);
+    background: rgba(255,255,255,0.04);
+    color: rgba(255,251,232,0.55);
+    cursor: pointer;
+    transition: all 0.12s ease;
+    box-shadow: 0 4px 0 rgba(0,0,0,0.3);
+    position: relative; top: 0;
+  }
+  .mode-tab:hover { top: -2px; box-shadow: 0 6px 0 rgba(0,0,0,0.3); color: var(--cream); }
+  .mode-tab.active {
+    background: var(--lime);
+    border-color: var(--lime);
+    color: var(--dark-text);
+    box-shadow: 0 4px 0 #4a6600;
+  }
+  .mode-tab.bz.active {
+    background: var(--orange);
+    border-color: var(--orange);
+    color: var(--dark-text);
+    box-shadow: 0 4px 0 #a8430a;
+  }
+
+  /* ── BIZARRE MODE WRAPPER ── */
+  #bizarre-mode { display: none; }
+  #bizarre-mode.active { display: block; }
+
+  /* The bizarre card -- a deliberately different world */
+  .bz-card {
+    background: #f4ecd8;
+    background-image: repeating-linear-gradient(0deg, transparent 0 26px, rgba(20,17,13,0.04) 26px 27px);
+    border-radius: 20px;
+    box-shadow: 8px 8px 0 var(--orange);
+    padding: 28px 28px 32px;
+    margin-bottom: 8px;
+    position: relative;
+    color: #1a140d;
+  }
+  .bz-card::before {
+    content: "FILED UNDER: UNEXPLAINED";
+    position: absolute; top: 0; right: 20px;
+    transform: translateY(-50%) rotate(-2deg);
+    background: #1a140d; color: #f4ecd8;
+    font-family: 'Fredoka One', cursive;
+    font-size: 10px; letter-spacing: 2px;
+    padding: 5px 12px; border-radius: 4px;
+  }
+  .bz-eyebrow {
+    font-family: 'Fredoka One', cursive;
+    font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase;
+    color: #1a140d; opacity: 0.55; text-align: center; margin-bottom: 16px;
+  }
+  .bz-label { font-family: 'Nunito', sans-serif; font-weight: 700; font-size: 15px; color: #1a140d; margin-bottom: 10px; }
+  .bz-label .hint { font-weight: 400; opacity: 0.55; }
+  .bz-input {
+    font-family: 'Nunito', sans-serif; font-size: 16px;
+    width: 100%; padding: 14px 18px; border-radius: 12px;
+    border: 2.5px solid rgba(26,20,13,0.25); background: #fffdf6; color: #1a140d;
+    outline: none; margin-bottom: 18px; resize: vertical; min-height: 70px;
+  }
+  .bz-input::placeholder { color: rgba(26,20,13,0.4); }
+  .bz-input:focus { border-color: var(--orange); box-shadow: 0 0 0 3px rgba(255,124,42,0.25); }
+
+  .bz-btn-row { display: flex; gap: 12px; flex-wrap: wrap; }
+  .bz-gen-btn {
+    flex: 1 1 auto;
+    font-family: 'Fredoka One', cursive; font-size: 20px; letter-spacing: 0.04em;
+    padding: 16px 24px; border-radius: 14px; border: none;
+    background: var(--orange); color: #fff; cursor: pointer;
+    box-shadow: 0 6px 0 #a8430a; position: relative; top: 0;
+    transition: all 0.1s ease; text-shadow: 1px 1px 0 rgba(0,0,0,0.2);
+  }
+  .bz-gen-btn:hover:not(:disabled) { top: -3px; box-shadow: 0 9px 0 #a8430a; }
+  .bz-gen-btn:active:not(:disabled) { top: 4px; box-shadow: 0 2px 0 #a8430a; }
+  .bz-gen-btn:disabled { opacity: 0.55; cursor: not-allowed; top: 0; }
+  .bz-dice-btn {
+    flex: 0 0 auto;
+    font-family: 'Fredoka One', cursive; font-size: 17px;
+    padding: 16px 22px; border-radius: 14px;
+    border: 2.5px solid #1a140d; background: #fffdf6; color: #1a140d; cursor: pointer;
+    box-shadow: 0 6px 0 rgba(26,20,13,0.4); position: relative; top: 0; transition: all 0.1s ease;
+  }
+  .bz-dice-btn:hover:not(:disabled) { top: -3px; box-shadow: 0 9px 0 rgba(26,20,13,0.4); }
+  .bz-dice-btn:active:not(:disabled) { top: 4px; box-shadow: 0 2px 0 rgba(26,20,13,0.4); }
+  .bz-dice-btn:disabled { opacity: 0.55; cursor: not-allowed; top: 0; }
+
+  .bz-loading-bar { height: 4px; background: rgba(26,20,13,0.15); border-radius: 4px; overflow: hidden; margin-top: 14px; display: none; }
+  .bz-loading-bar.active { display: block; }
+  .bz-loading-bar::after { content:''; display:block; height:100%; width:40%; background: var(--orange); border-radius:4px; animation: barScroll 1.2s ease-in-out infinite; }
+  .bz-error { background: rgba(255,124,42,0.18); border: 2px solid #a8430a; border-radius: 10px; padding: 12px 16px; margin-top: 14px; color: #1a140d; font-family:'Nunito'; font-weight:700; font-size:14px; display:none; }
+  .bz-error.visible { display: block; }
+
+  /* Bizarre output */
+  #bz-output-area { display: none; }
+  #bz-output-area.visible { display: block; animation: fadeUp 0.35s ease forwards; }
+  .bz-out-card {
+    background: #f4ecd8;
+    background-image: repeating-linear-gradient(0deg, transparent 0 26px, rgba(20,17,13,0.04) 26px 27px);
+    border: 3px solid #1a140d; border-radius: 16px;
+    padding: 0; margin-bottom: 16px; overflow: hidden; color: #1a140d;
+  }
+  .bz-out-title {
+    font-family: 'Fredoka One', cursive; font-size: 22px;
+    background: #1a140d; color: #f4ecd8; padding: 12px 18px; letter-spacing: 0.02em;
+  }
+  .bz-out-body { font-family: 'Nunito', sans-serif; font-size: 16px; line-height: 1.6; padding: 18px; }
+  .bz-out-body .lab { display:block; font-family:'Fredoka One',cursive; font-size:11px; letter-spacing:2px; text-transform:uppercase; opacity:0.55; margin-bottom:6px; }
+  .bz-out-caption {
+    font-family: 'Boogaloo', cursive; font-size: 22px; line-height: 1.4;
+    text-align: center; padding: 22px 18px; border-top: 2px dashed rgba(26,20,13,0.3);
+  }
+  .bz-tag-row { display:flex; flex-wrap:wrap; gap:7px; padding: 0 18px 18px; }
+  .bz-tag { font-family:'Fredoka One',cursive; font-size:11px; letter-spacing:0.08em; padding:4px 12px; border-radius:100px; border:2px solid rgba(26,20,13,0.3); color: rgba(26,20,13,0.6); }
+
+  .bz-action-row { display:flex; gap:10px; flex-wrap:wrap; margin-bottom: 8px; }
+  .bz-action-btn {
+    font-family:'Fredoka One',cursive; font-size:15px; padding:11px 24px; border-radius:10px;
+    border:2.5px solid rgba(255,251,232,0.3); background: rgba(255,255,255,0.07); color: var(--cream);
+    cursor:pointer; transition: all 0.12s ease; box-shadow: 0 4px 0 rgba(0,0,0,0.3); position:relative; top:0;
+  }
+  .bz-action-btn:hover { border-color: var(--orange); color: var(--orange); top:-2px; box-shadow: 0 6px 0 rgba(0,0,0,0.3); }
+  .bz-action-btn:active { top:3px; box-shadow: 0 1px 0 rgba(0,0,0,0.3); }
+  .bz-copy-confirm { font-family:'Fredoka One',cursive; font-size:13px; color: var(--orange); align-self:center; letter-spacing:0.08em; opacity:0; transition: opacity 0.3s; }
+  .bz-copy-confirm.show { opacity: 1; }
+
+  @media (max-width: 540px) {
+    .bz-card { padding: 20px 18px 24px; }
+    .bz-gen-btn { font-size: 17px; }
+    .bz-btn-row { flex-direction: column; }
+    .bz-action-row { flex-direction: column; }
+  }
 </style>
+</head>
+<body>
 
-<div class="sw-wrap">
+<div class="page">
 
-  <div class="sw-hero">
-    <div class="sw-eyebrow">&#10022; Seeds &amp; Worms &middot; The Daily Chirp</div>
-    <div class="sw-hero-title">SEEDS &amp; WORMS</div>
-    <div class="sw-hero-sub">THE DAILY CHIRP</div>
-    <p class="sw-hero-desc">
-      For the builders, makers, and starters &mdash;
-      the ones who launch before they&rsquo;re ready,
-      ship the imperfect thing, and show up again tomorrow.
-      <em>These are for you.</em>
-    </p>
+  <!-- TOP BADGE -->
+  <div class="top-badge">
+    <span>🐦 Seeds &amp; Worms · Chirps for Thought</span>
   </div>
 
-  <div class="sw-tabs">
-    <button class="sw-tab active" onclick="switchSeries('ebt',this)">&#127800; Early Bird Routines</button>
-    <button class="sw-tab"        onclick="switchSeries('cft',this)">&#128038; Chirps for Thought</button>
-    <button class="sw-tab"        onclick="switchSeries('bbi',this)">&#129504; Bird Brain Ideas</button>
+  <!-- HERO -->
+  <div class="hero-title">
+    <span class="line1">SEEDS &amp; WORMS</span>
+    <span class="line2">GENERATOR</span>
+  </div>
+  <p class="hero-tagline">Start Messy, Grow Smart</p>
+  <p class="hero-sub">Baker Bird + Bug · Single-panel gag cartoons</p>
+  <p class="hero-byline">Created by Quirky Flash Chronicles · Happy Grouch Cartoonist · MVANNP</p>
+  <div class="worm-row">🐛 🐛 🐛 🐛 🐛 🐛 🐛 🐛 🐛</div>
+
+  <!-- MODE TOGGLE -->
+  <div class="mode-toggle">
+    <button class="mode-tab active" id="modeSW" onclick="setMode('sw')">🐦 Seeds &amp; Worms</button>
+    <button class="mode-tab bz" id="modeBZ" onclick="setMode('bizarre')">🌀 Bizarre</button>
   </div>
 
-  <div class="sw-totalcount" id="sw-totalcount"></div>
+  <!-- ════════ SEEDS & WORMS MODE ════════ -->
+  <div id="sw-mode">
 
-  <div class="sw-main">
+  <!-- MAIN INPUT CARD -->
+  <div class="main-card">
+    <div class="card-eyebrow">Seeds &amp; Worms</div>
 
-    <div class="sw-strip-meta">
-      <div class="sw-strip-title" id="sw-stitle"></div>
+    <div class="section-label">Drop a topic or situation here:</div>
+    <input class="topic-input" type="text" id="freeformInput"
+      placeholder="Add a topic, situation, or question... (optional — works with any series)"
+      maxlength="160" />
+
+    <div class="filter-label">Pick a series (required -- pick one):</div>
+    <div class="filter-grid" id="moodGrid">
+      <button class="mood-btn" data-cat="Early Bird Routines">🌅 Early Bird Routines</button>
+      <button class="mood-btn" data-cat="Chirps for Thought">🐦 Chirps for Thought</button>
+      <button class="mood-btn" data-cat="Bird Brain Ideas">🔧 Bird Brain Ideas</button>
+      <button class="mood-btn" data-cat="Honestly Though">🤔 Honestly Though</button>
+      <button class="mood-btn" data-cat="Make Them Feel Important">🫵 Make Them Feel Important</button>
     </div>
 
-    <div class="sw-frame" id="sw-frame" onclick="openLightbox()">
-      <div class="sw-expand-hint">&#128269; Tap to expand</div>
-      <div class="sw-loading" id="sw-loading">Loading strips...</div>
-      <img id="sw-img" src="" alt="" style="display:none;" />
+    <div id="bbRoutineWrap" style="display:none; margin-top:14px;">
+      <div class="bb-chip-label">Pick a well (or leave on Any):</div>
+      <div class="bb-chip-row" id="bbChipRow"></div>
+      <button class="bb-routine-btn" onclick="bbRoutineOfTheDay()">🎲 Routine of the Day</button>
+      <div class="bb-routine-hint">A fresh, do-it-tomorrow morning routine every time — never the same one twice in a cycle.</div>
     </div>
 
-    <div class="sw-actions">
-      <button class="sw-action-btn" onclick="toggleArchive()">
-        &#9776; <span id="sw-archivelabel">All Strips</span>
-      </button>
-      <button class="sw-action-btn" onclick="handleShare()">
-        &#8599; Share
-      </button>
+    <hr class="card-rule">
+
+    <div class="filter-label">Who's in the panel?</div>
+    <div class="char-grid" id="charGrid">
+      <button class="char-btn" data-char="Both">🐦🐛 Both</button>
+      <button class="char-btn" data-char="Baker Bird only">🐦 Baker Bird only</button>
+      <button class="char-btn" data-char="Bug only">🐛 Bug only</button>
+      <button class="char-btn" data-char="Supporting character">✨ Supporting character</button>
+    </div>
+    <div id="supportingCharNote" style="display:none; font-family:'Nunito',sans-serif; font-size:13px; color:rgba(255,251,232,0.5); margin-top:8px; margin-bottom:4px;">
+      // Describe the supporting character in the topic field, or leave blank and let the generator surprise you
     </div>
 
-    <div class="sw-note" id="sw-note">
-      <div class="sw-note-label">Morgan&rsquo;s Note</div>
-      <span id="sw-note-text"></span>
+    <hr class="card-rule">
+
+    <div class="filter-label">Humor filters (pick any, or leave all for random mix):</div>
+    <div class="filter-grid" id="humorGrid">
+      <button class="humor-btn" data-humor="Irony">🔄 Irony</button>
+      <button class="humor-btn" data-humor="Wordplay">🔤 Wordplay</button>
+      <button class="humor-btn" data-humor="Deadpan">😐 Deadpan</button>
+      <button class="humor-btn" data-humor="Hyperbole">📢 Hyperbole</button>
+      <button class="humor-btn" data-humor="Madcap">🤪 Madcap</button>
+      <button class="humor-btn" data-humor="Analogy">🔗 Analogy</button>
+      <button class="humor-btn" data-humor="Misplaced Focus">🔍 Misplaced Focus</button>
+      <button class="humor-btn" data-humor="Metahumor">🪞 Metahumor</button>
     </div>
 
-    <div class="sw-archive" id="sw-archive">
-      <div class="sw-archive-header">
-        <div class="sw-archive-title" id="sw-archivetitle"></div>
-        <input class="sw-search" id="sw-search" type="search" placeholder="Search strips..." oninput="filterArchive()" autocomplete="off" />
+    <button class="generate-btn" id="generateBtn" onclick="generateStrip()">
+      🐦 GENERATE THE GAG! 🐦
+    </button>
+
+    <div class="loading-bar" id="loadingBar"></div>
+    <div class="error-box" id="errorBox"></div>
+  </div>
+
+  <!-- OUTPUT -->
+  <div id="output-area">
+
+    <!-- Try This (Early Bird only) -->
+    <div class="try-this-card" id="tryThisCard">
+      <div class="try-this-label">🌅 Try This Tomorrow <span class="try-this-well" id="outTryWell"></span></div>
+      <div class="try-this-text" id="outTryThis">–</div>
+    </div>
+
+    <!-- The Panel -->
+    <div class="out-card">
+      <div class="out-pill pill-teal">The Panel</div>
+      <div class="out-title" id="outTitle">–</div>
+      <div class="out-sub" id="outSeries">// What the cartoonist draws</div>
+      <div class="out-body" id="outScene">–</div>
+      <div class="out-zap" style="border-color:var(--teal);">
+        <div class="zap-label">Visual gag</div>
+        <span id="outVisualGag">–</span>
       </div>
-      <div class="sw-archive-grid" id="sw-archivegrid"></div>
+      <div class="tag-row" id="outTags"></div>
     </div>
 
-  </div><!-- /sw-main -->
-
-  <div class="sw-counter" id="sw-counter"></div>
-
-  <div class="sw-nav">
-    <button class="sw-nav-btn" id="sw-first" onclick="goFirst()"  title="First">&#171;</button>
-    <button class="sw-nav-btn" id="sw-prev"  onclick="goPrev()"   title="Previous">&#8249;</button>
-    <div class="sw-nav-center">
-      <button class="sw-nav-end" onclick="goFirst()">First</button>
-      <button class="sw-nav-end" onclick="goLatest()">Latest</button>
+    <!-- The Text -->
+    <div class="out-card">
+      <div class="out-pill pill-pink">The Text</div>
+      <div class="out-title">Caption or Dialogue</div>
+      <div class="out-sub" id="outLineType">// What gets lettered on the finished panel</div>
+      <div class="dialogue-block" id="outDialogueBlock"></div>
+      <div class="out-zap" style="border-color:var(--pink);">
+        <div class="zap-label">Why it works</div>
+        <span id="outWhyItWorks">–</span>
+      </div>
+      <div class="out-zap" style="border-color:#7c3aed; margin-top:10px;" id="humorTechBox">
+        <div class="zap-label">Humor technique</div>
+        <span id="outHumorTech">–</span>
+      </div>
     </div>
-    <button class="sw-nav-btn" id="sw-next"  onclick="goNext()"   title="Next">&#8250;</button>
-    <button class="sw-nav-btn" id="sw-last"  onclick="goLatest()" title="Latest">&#187;</button>
-  </div>
 
-  <div class="sw-lightbox" id="sw-lightbox" onclick="closeLightboxOutside(event)">
-    <div class="sw-lightbox-title" id="lb-title"></div>
-    <img class="sw-lightbox-img" id="lb-img" src="" alt="" />
-    <div class="sw-lightbox-nav">
-      <button class="sw-lightbox-arrow" id="lb-prev" onclick="lbPrev(event)">&#8249;</button>
-      <button class="sw-lightbox-close" onclick="closeLightbox()">&#10005; Close</button>
-      <button class="sw-lightbox-arrow" id="lb-next" onclick="lbNext(event)">&#8250;</button>
+    <!-- Chirp for Thought -->
+    <div class="chirp-card">
+      <div class="out-pill pill-yellow">Chirp for Thought</div>
+      <div class="out-title">The Takeaway</div>
+      <div class="out-sub" id="outChirpSub">// Printed at the bottom of the panel · MVANNP</div>
+      <div class="chirp-zap" id="outChirp">–</div>
     </div>
+
+    <div class="action-row">
+      <button class="action-btn" onclick="generateStrip()">↺ Generate Another</button>
+      <button class="action-btn" onclick="copyScript()">⎘ Copy Script</button>
+      <span class="copy-confirm" id="copyConfirm">✦ Copied!</span>
+    </div>
+
+  </div><!-- /output-area -->
+
+  </div><!-- /sw-mode -->
+
+  <!-- ════════ BIZARRE MODE ════════ -->
+  <div id="bizarre-mode">
+
+    <div class="bz-card">
+      <div class="bz-eyebrow">Bizarre · Single-Panel Non-Sequiturs</div>
+
+      <div class="bz-label">Your idea <span class="hint">(optional — or hit Surprise Me)</span></div>
+      <textarea class="bz-input" id="bzInput" maxlength="200"
+        placeholder="e.g. a snail filing a noise complaint · penguins at a timeshare seminar · Magellan lost in a parking garage"></textarea>
+
+      <div class="bz-btn-row">
+        <button class="bz-gen-btn" id="bzGenerateBtn" onclick="bzGenerate(false)">DEVELOP THE PANEL</button>
+        <button class="bz-dice-btn" id="bzDiceBtn" onclick="bzGenerate(true)">🎲 Surprise Me</button>
+      </div>
+
+      <div class="bz-loading-bar" id="bzLoadingBar"></div>
+      <div class="bz-error" id="bzErrorBox"></div>
+    </div>
+
+    <!-- BIZARRE OUTPUT -->
+    <div id="bz-output-area">
+      <div class="bz-out-card">
+        <div class="bz-out-title" id="bzOutTitle">–</div>
+        <div class="bz-out-body">
+          <span class="lab">The Panel</span>
+          <span id="bzOutScene">–</span>
+        </div>
+        <div class="bz-out-caption" id="bzOutCaption">–</div>
+        <div class="bz-tag-row" id="bzOutTags"></div>
+      </div>
+
+      <div class="bz-action-row">
+        <button class="bz-action-btn" onclick="bzGenerate(false)">↺ Another</button>
+        <button class="bz-action-btn" onclick="bzCopyScript()">⎘ Copy Script</button>
+        <span class="bz-copy-confirm" id="bzCopyConfirm">✦ Copied!</span>
+      </div>
+    </div>
+
+  </div><!-- /bizarre-mode -->
+
+  <!-- FOOTER -->
+  <div class="site-footer">
+    <span class="footer-tagline">Start Messy, Grow Smart</span><br>
+    Seeds &amp; Worms Generator · <a href="https://quirkyflashchronicles.com" target="_blank" rel="noopener">Quirky Flash Chronicles</a> · Studio Bits of Gravity<br>
+    Happy Grouch Cartoonist · MVANNP
   </div>
 
-  <div class="sw-footer">
-    Seeds &amp; Worms &middot; <a href="https://quirkyflashchronicles.com">Quirky Flash Chronicles</a> &middot; Happy Grouch Cartoonist &middot; MVANNP
-  </div>
-
-</div>
+</div><!-- /page -->
 
 <script>
-const notes = {
-  "low-visibility-cycle.jpg": "The algorithm wants engagement. Bug wants pie. Honestly, same thing. — MVANNP",
-  "productive-relaxation.jpg": "Rest is a skill. Practice makes imperfect — and that's perfectly fine. — MVANNP",
-  "wings-version-2.jpg": "Sometimes the breakthrough isn't a new tool — it's remembering what you already know how to use. — MVANNP",
-  "the-nest-hatching-ideas.jpg": "Little shops like these make the world work better. — MVANNP"
-};
+  const WORKER_URL = 'https://gravificer-proxy.mvphillips.workers.dev/';
+  let selectedSeries = '';
+  let selectedChar = 'Both';
+  let selectedHumor = [];
+  let lastData = null;
 
-const seriesNames = { ebt:"Early Bird Routines", cft:"Chirps for Thought", bbi:"Bird Brain Ideas" };
-let cur='ebt', idx=0, archOpen=false;
-let strips = { ebt:[], cft:[], bbi:[] };
+  /* ── EARLY BIRD ROUTINE LIBRARY (categorized by routine well) ──
+     Each routine is tagged with a well. A per-filter shuffle-bag deals a
+     fresh one each generate, so nothing repeats until that pool is used.
+     Grow any category anytime -- the bags adapt to whatever length. */
+  const BB_CATEGORIES = [
+    { key: 'Any',                       icon: '\u{1F3B2}' },
+    { key: 'Light & Air',               icon: '\u2600\uFE0F' },
+    { key: 'Body & Movement',           icon: '\u{1F938}' },
+    { key: 'Breath & Calm',             icon: '\u{1F32C}\uFE0F' },
+    { key: 'Water & Fuel',              icon: '\u{1F4A7}' },
+    { key: 'Mind & Intention',          icon: '\u{1F3AF}' },
+    { key: 'Phone Boundaries',          icon: '\u{1F4F5}' },
+    { key: 'Environment',               icon: '\u{1F9F9}' },
+    { key: 'Creative Warmup',           icon: '\u270F\uFE0F' },
+    { key: 'Connection & Self-Kindness', icon: '\u{1F49B}' },
+    { key: 'Grounding & Senses',        icon: '\u{1F33F}' }
+  ];
 
-function titleFromFile(f) {
-  return f.replace(/\.[^.]+$/,'').split('-').map(w=>w.charAt(0).toUpperCase()+w.slice(1)).join(' ');
-}
+  const BB_ROUTINES = [
+    { cat: 'Light & Air',  text: "Step outside for sixty seconds of real daylight before anything else." },
+    { cat: 'Light & Air',  text: "Open one window and take five slow breaths of cool morning air." },
+    { cat: 'Water & Fuel', text: "Drink a full glass of water before you touch the coffee." },
+    { cat: 'Environment',  text: "Make the bed -- the first tiny win of the day." },
+    { cat: 'Phone Boundaries', text: "Keep the first ten minutes phone-free; check the sky before the screen." },
+    { cat: 'Body & Movement',  text: "Reach for the ceiling and stretch tall before reaching for your phone." },
+    { cat: 'Breath & Calm',    text: "Take five slow breaths before your feet ever hit the floor." },
+    { cat: 'Body & Movement',  text: "Walk to the end of the block and back, no agenda." },
+    { cat: 'Mind & Intention', text: "Name one thing -- just one -- you actually want to do today." },
+    { cat: 'Mind & Intention', text: "Write a single line in a notebook. Not pages. One line." },
+    { cat: 'Light & Air',  text: "Face the brightest window while the coffee brews." },
+    { cat: 'Grounding & Senses', text: "Hold your warm drink in both hands and do nothing for one minute." },
+    { cat: 'Body & Movement',  text: "Put on one song and shake out for the length of it." },
+    { cat: 'Environment',  text: "Set out tomorrow's start tonight so morning-you has less to decide." },
+    { cat: 'Phone Boundaries', text: "Move the alarm across the room so getting up is the first small choice." },
+    { cat: 'Environment',  text: "Clear one surface -- just one -- before the day fills it again." },
+    { cat: 'Connection & Self-Kindness', text: "Say one genuinely kind sentence to yourself, out loud if you can." },
+    { cat: 'Connection & Self-Kindness', text: "Send one warm good-morning message to someone before 9." },
+    { cat: 'Grounding & Senses', text: "Stand barefoot on the floor for a moment and notice you are here." },
+    { cat: 'Mind & Intention', text: "Decide the day's 'one good thing' before the world has opinions." },
+    { cat: 'Body & Movement',  text: "Do one gentle stretch you actually like -- the one that feels good." },
+    { cat: 'Breath & Calm',    text: "Sit with both feet flat on the floor for one quiet minute." },
+    { cat: 'Water & Fuel', text: "Make the coffee a small ritual instead of a refuel." },
+    { cat: 'Creative Warmup',  text: "Write three sentences, badly, on purpose, before the day asks anything." },
+    { cat: 'Light & Air',  text: "Step outside and find one thing that is green." },
+    { cat: 'Grounding & Senses', text: "Splash cool water on your face and call it a reset." },
+    { cat: 'Mind & Intention', text: "Pick one task for today and let the rest wait their turn." },
+    { cat: 'Breath & Calm',    text: "Put your feet up the wall for two minutes and just breathe." },
+    { cat: 'Water & Fuel', text: "Eat breakfast sitting down, away from a screen." },
+    { cat: 'Body & Movement',  text: "Roll your shoulders back ten times and unclench your jaw." },
+    { cat: 'Phone Boundaries', text: "Read one page of something you actually like before the news." },
+    { cat: 'Environment',  text: "Tidy the spot you will see first when you come home tonight." },
+    { cat: 'Light & Air',  text: "Let the sun hit your face for thirty seconds, eyes closed." },
+    { cat: 'Mind & Intention', text: "Make a short list of what you are NOT doing today." },
+    { cat: 'Grounding & Senses', text: "Hum or sing for the length of brushing your teeth." },
+    { cat: 'Grounding & Senses', text: "Take the long way to the kitchen and notice three things." },
+    { cat: 'Body & Movement',  text: "Stretch both arms overhead and take one enormous yawn on purpose." },
+    { cat: 'Connection & Self-Kindness', text: "Write down the first kind thought you have, before the critical ones arrive." },
+    { cat: 'Light & Air',  text: "Stand at the window and watch the weather for one full minute." },
+    { cat: 'Water & Fuel', text: "Drink your water outside if you can, even just on the step." },
+    { cat: 'Body & Movement',  text: "Do five slow neck rolls before checking a single notification." },
+    { cat: 'Mind & Intention', text: "Pick tomorrow's one priority before you close your eyes tonight." },
+    { cat: 'Environment',  text: "Put on real shoes -- it tells your brain the day has started." },
+    { cat: 'Breath & Calm',    text: "Take three breaths so slow they feel almost too slow." },
+    { cat: 'Environment',  text: "Wipe down one counter and call the kitchen handled." },
+    { cat: 'Grounding & Senses', text: "Look at something far away for a minute before looking at anything close." },
+    { cat: 'Body & Movement',  text: "Set a two-minute timer and stretch until it rings." },
+    { cat: 'Connection & Self-Kindness', text: "Greet the day out loud, even if it feels silly. Especially then." },
+    { cat: 'Environment',  text: "Lay out your water glass and vitamins the night before." },
+    { cat: 'Breath & Calm',    text: "Take the first ten breaths of the day standing in a doorway, tall." },
+    { cat: 'Creative Warmup',  text: "Make one small thing -- a sketch, a sentence, a chord -- before email." },
+    { cat: 'Phone Boundaries', text: "Put the phone face-down in another room while you have breakfast." },
+    { cat: 'Grounding & Senses', text: "Notice one good smell -- coffee, toast, rain -- and stay with it." },
+    { cat: 'Body & Movement',  text: "Do a slow forward fold and let your head hang for thirty seconds." },
+    { cat: 'Mind & Intention', text: "Pick a single word for the day and keep it in your pocket." },
+    { cat: 'Light & Air',  text: "Step on the scale of nothing -- skip the metrics, just stand in the light." },
+    { cat: 'Light & Air',  text: "Open the curtains all the way before you do anything else." },
+    { cat: 'Body & Movement',  text: "Take a two-minute walk in whatever direction looks brightest." },
+    { cat: 'Mind & Intention', text: "Write tomorrow-you a one-line note tonight: 'Start with ___.'" },
+    { cat: 'Body & Movement',  text: "Hold a stretch in the shower while the water warms up." },
+    { cat: 'Creative Warmup',  text: "Doodle for one minute with no goal and nobody watching." },
+    { cat: 'Creative Warmup',  text: "Free-write whatever is in your head for ninety seconds, then stop." }
+  ];
 
-async function loadManifest(series) {
-  try {
-    const res = await fetch('manifests/'+series+'.txt?v='+Date.now());
-    if (!res.ok) return [];
-    const text = await res.text();
-    return text.split('\n').map(l=>l.trim()).filter(l=>l.length>0&&!l.startsWith('#'));
-  } catch(e) { return []; }
-}
+  let bbFilter = 'Any';        // active routine well
+  let bbBags = {};             // one shuffle-bag per filter key
+  let bbLastByFilter = {};     // last routine text dealt, per filter (no repeats)
+  let bbPendingRoutine = '';   // {text,cat} set by Routine of the Day
+  let bbActiveRoutine = '';    // routine text used in the most recent generation
+  let bbActiveCategory = '';   // its well, for the Try This label
 
-function updateTotalCount() {
-  const total = strips.ebt.length + strips.cft.length + strips.bbi.length;
-  document.getElementById('sw-totalcount').innerHTML =
-    '<span>'+total+'</span> cartoon'+(total!==1?'s':'')+' and counting';
-}
-
-function filterArchive() {
-  const query = document.getElementById('sw-search').value.toLowerCase().trim();
-  const s = strips[cur];
-  const filtered = query ? s.filter(strip=>titleFromFile(strip.file).toLowerCase().includes(query)) : s;
-  if (filtered.length===0) {
-    document.getElementById('sw-archivegrid').innerHTML='<div class="sw-no-results">No strips found for "'+query+'"</div>';
-    return;
+  function bbShuffle(arr) {
+    const a = arr.slice();
+    for (let i = a.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [a[i], a[j]] = [a[j], a[i]];
+    }
+    return a;
   }
-  document.getElementById('sw-archivegrid').innerHTML = filtered.map(strip=>{
-    const i=s.indexOf(strip);
-    const title=titleFromFile(strip.file);
-    return '<div class="sw-thumb'+(i===idx?' cur':'')+'" onclick="goTo('+i+')">'
-      +'<img src="'+strip.path+'" alt="'+title+'" />'
-      +'<div class="sw-thumb-title">'+title+'</div>'
-      +'<div class="sw-thumb-num">#'+(i+1)+'</div></div>';
-  }).join('');
-}
 
-async function init() {
-  const [ebtFiles,cftFiles,bbiFiles] = await Promise.all([
-    loadManifest('ebt'), loadManifest('cft'), loadManifest('bbi')
-  ]);
-  strips.ebt = ebtFiles.map(f=>({file:f,path:'images/ebt/'+f}));
-  strips.cft = cftFiles.map(f=>({file:f,path:'images/cft/'+f}));
-  strips.bbi = bbiFiles.map(f=>({file:f,path:'images/bbi/'+f}));
-  updateTotalCount();
+  function bbPoolFor(filter) {
+    return filter === 'Any' ? BB_ROUTINES : BB_ROUTINES.filter(r => r.cat === filter);
+  }
 
-  // swipe support
-  let touchStartX=0;
-  const frame=document.getElementById('sw-frame');
-  frame.addEventListener('touchstart',e=>{touchStartX=e.touches[0].clientX;},{passive:true});
-  frame.addEventListener('touchend',e=>{
-    const dx=e.changedTouches[0].clientX-touchStartX;
-    if(Math.abs(dx)>50){if(dx<0)goNext();else goPrev();}
-    else openLightbox();
+  // Returns {text, cat}. Draws from the bag for the given filter (defaults to
+  // the active well), refilling + reshuffling that bag when it runs dry.
+  function bbNextRoutine(filter) {
+    filter = filter || bbFilter;
+    const pool = bbPoolFor(filter);
+    if (!bbBags[filter] || bbBags[filter].length === 0) {
+      const fresh = bbShuffle(pool);
+      const last = bbLastByFilter[filter];
+      if (fresh.length > 1 && fresh[fresh.length - 1].text === last) {
+        [fresh[fresh.length - 1], fresh[fresh.length - 2]] =
+          [fresh[fresh.length - 2], fresh[fresh.length - 1]];
+      }
+      bbBags[filter] = fresh;
+    }
+    const r = bbBags[filter].pop();
+    bbLastByFilter[filter] = r.text;
+    return r;
+  }
+
+  function bbSetFilter(key) {
+    bbFilter = key;
+    document.querySelectorAll('.bb-chip').forEach(c => {
+      c.classList.toggle('active', c.dataset.cat === key);
+    });
+  }
+
+  function bbRoutineOfTheDay() {
+    document.querySelectorAll('.mood-btn').forEach(b => b.classList.remove('active'));
+    const ebBtn = document.querySelector('[data-cat="Early Bird Routines"]');
+    if (ebBtn) ebBtn.classList.add('active');
+    selectedSeries = 'Early Bird Routines';
+    document.getElementById('freeformInput').value = '';  // let the routine drive
+    bbPendingRoutine = bbNextRoutine();   // {text, cat}
+    bbUpdateRoutineButton();
+    generateStrip();
+  }
+
+  // Build the well-filter chips once.
+  function bbBuildChips() {
+    const row = document.getElementById('bbChipRow');
+    if (!row || row.dataset.built) return;
+    BB_CATEGORIES.forEach(c => {
+      const b = document.createElement('button');
+      b.className = 'bb-chip' + (c.key === bbFilter ? ' active' : '');
+      b.dataset.cat = c.key;
+      b.type = 'button';
+      b.textContent = `${c.icon} ${c.key}`;
+      b.addEventListener('click', () => bbSetFilter(c.key));
+      row.appendChild(b);
+    });
+    row.dataset.built = '1';
+  }
+
+  // Show the Routine of the Day controls only when Early Bird is the active series.
+  function bbUpdateRoutineButton() {
+    const wrap = document.getElementById('bbRoutineWrap');
+    if (!wrap) return;
+    bbBuildChips();
+    wrap.style.display = (selectedSeries === 'Early Bird Routines') ? 'block' : 'none';
+  }
+
+  document.querySelectorAll('.mood-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.mood-btn').forEach(b => b.classList.remove('active'));
+      if (selectedSeries === btn.dataset.cat) {
+        selectedSeries = '';
+      } else {
+        btn.classList.add('active');
+        selectedSeries = btn.dataset.cat;
+      }
+      bbUpdateRoutineButton();
+    });
   });
 
-  render();
-}
+  document.querySelectorAll('.char-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.char-btn').forEach(b => b.classList.remove('active'));
+      if (selectedChar === btn.dataset.char) {
+        selectedChar = 'Both';
+        document.querySelector('[data-char="Both"]').classList.add('active');
+      } else {
+        btn.classList.add('active');
+        selectedChar = btn.dataset.char;
+      }
+      // Show note for supporting character
+      const note = document.getElementById('supportingCharNote');
+      note.style.display = selectedChar === 'Supporting character' ? 'block' : 'none';
+    });
+  });
 
-function render() {
-  const s=strips[cur];
-  const loading=document.getElementById('sw-loading');
-  const img=document.getElementById('sw-img');
-  if(s.length===0){
-    loading.textContent='No strips yet — check back soon!';
-    loading.style.display='block'; img.style.display='none';
-    document.getElementById('sw-stitle').textContent='';
-    document.getElementById('sw-counter').textContent='';
-    document.getElementById('sw-note').style.display='none';
-    ['sw-first','sw-prev','sw-next','sw-last'].forEach(id=>document.getElementById(id).disabled=true);
-    return;
+  // Default both active on load
+  document.querySelector('[data-char="Both"]').classList.add('active');
+
+  document.querySelectorAll('.humor-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      btn.classList.toggle('active');
+      const h = btn.dataset.humor;
+      if (btn.classList.contains('active')) selectedHumor.push(h);
+      else selectedHumor = selectedHumor.filter(x => x !== h);
+    });
+  });
+
+  const HUMOR_DEFINITIONS = {
+    'Irony': {
+      def: 'The intended meaning is the exact opposite of the literal meaning. The surface statement and the real meaning contradict each other.',
+      example: 'Alcoholic father disappointed in pothead son.'
+    },
+    'Wordplay': {
+      def: 'Using words other than their primary function -- switching meanings, rhyming, puns, double entendres, words that mean two things at once.',
+      example: 'Robot charged with battery.'
+    },
+    'Deadpan': {
+      def: 'Delivering an absurd, outrageous, or ridiculous statement with complete seriousness and zero acknowledgment that it is unusual.',
+      example: 'Man calmly explains to news crew why he has been living in a vending machine for three weeks.'
+    },
+    'Hyperbole': {
+      def: 'Exaggerating something to an absurd extreme -- something impossible, something that breaks the laws of science or reality.',
+      example: 'Area woman finally uploads all 12 million pictures of her vacation to Europe on Facebook.'
+    },
+    'Madcap': {
+      def: 'Silly, crazy, wacky nonsense. You go to wacky town. Logic is optional. The more absurd and unhinged the better.',
+      example: 'Hamster thrown from remote control monster truck.'
+    },
+    'Analogy': {
+      def: 'A comparison between two completely unrelated things that reveals something true or funny about both.',
+      example: 'Al Gore places infant son in rocket to escape dying planet.'
+    },
+    'Misplaced Focus': {
+      def: 'You deliberately put your attention on the completely wrong detail -- ignoring the obvious big thing to focus on something trivial.',
+      example: 'Missing boy scout earns publicity badge.'
+    },
+    'Metahumor': {
+      def: 'Humor that makes fun of humor itself, the idea of jokes, or the format of comedy.',
+      example: 'Comedians no longer able to write jokes longer than 140 characters.'
+    }
+  };
+
+  function buildPrompt() {
+    const freeform = document.getElementById('freeformInput').value.trim();
+    const series = selectedSeries || 'Honestly Though';
+
+    // Build humor instruction block with full definitions
+    let humorBlock;
+    if (selectedHumor.length === 0) {
+      humorBlock = `HUMOR APPROACH: No filter selected -- choose the approach that best fits the panel naturally. Any of the following techniques are available: Irony, Wordplay, Deadpan, Hyperbole, Madcap, Analogy, Misplaced Focus, Metahumor.`;
+    } else {
+      const defs = selectedHumor.map(h => {
+        const d = HUMOR_DEFINITIONS[h];
+        return d ? `  ${h.toUpperCase()}: ${d.def}\n  Example of this type: "${d.example}"` : `  ${h.toUpperCase()}`;
+      }).join('\n\n');
+      humorBlock = `HUMOR APPROACH: The panel MUST use the following humor technique${selectedHumor.length > 1 ? 's' : ''} -- this is not optional, it is a structural requirement of the gag:\n\n${defs}\n\nThe humor technique must be visible and deliberate in the panel. If someone read the output, they should be able to identify which technique is being used. Do not just gesture at the style -- commit to it fully.`;
+    }
+
+    const charInstructions = {
+      'Both': `CHARACTERS IN THIS PANEL: Both Baker Bird and Bug appear together. Standard dynamic applies -- Baker Bird opens, Bug reacts.`,
+
+      'Baker Bird only': `CHARACTERS IN THIS PANEL: Baker Bird only. Bug is NOT in this panel.
+Baker Bird is alone on the branch (or in The Nest). The gag lives entirely in what Baker Bird is doing, saying, or thinking by himself. His internal monologue, his solo scheme, his one-sided enthusiasm with no one to reality-check him. Can use a caption below the panel instead of speech. Baker Bird alone is Baker Bird at his most unfiltered -- no Bug to pump the brakes.
+Bug may be referenced but is NOT shown. Bug might be implied (an empty coffee cup next to Baker Bird, a note that says "I quit" on the workbench) but does not speak or appear.`,
+
+      'Bug only': `CHARACTERS IN THIS PANEL: Bug only. Baker Bird is NOT in this panel.
+Bug is alone -- on the branch, with his coffee, doing his thing. The gag lives entirely in Bug's perspective without Baker Bird's chaos. Bug alone is thoughtful, dry, and slightly exhausted by life in general. He does not need Baker Bird to have opinions.
+This is the panel where Bug gets to be the main character. His fake yellow beak is front and center. His deadpan take on something -- a situation, a thought, a thing happening in the background -- carries the whole panel.
+Baker Bird may be referenced or heard (a speech bubble arriving from off-panel, a noise in the background, an object Baker Bird left behind) but does not appear in frame.
+Use the attached image as reference: Bug alone on the branch with his coffee, Baker Bird's voice arriving as a speech bubble from off-panel, Bug's response doing all the work.`,
+
+      'Supporting character': `CHARACTERS IN THIS PANEL: Baker Bird and Bug plus a NEW SUPPORTING CHARACTER.
+The supporting character is a one-panel guest who shows up to make the gag land in a way it couldn't with just the two of them. They can be:
+- Another bird, animal, or creature from the natural world
+- A human character (just a hand, a pair of shoes, or partially in frame is fine)
+- An anthropomorphized object (a very tired worm, a seed with opinions, a can of Kan-of-Worms that is somehow speaking)
+- A completely absurd entity that has no business being on the branch
+The supporting character should have a name, a clear personality in one sentence, and one line or visual gag. They are the third beat -- the thing that makes Baker Bird and Bug's dynamic land differently than it would alone.
+If the writer has described a character in the topic field, use that. If not, invent one that fits the panel perfectly.
+In the JSON, include the supporting character's name and a one-sentence description in the panel_description.`
+    };
+
+    const charBlock = charInstructions[selectedChar] || charInstructions['Both'];
+
+    // Series-specific instructions
+    const seriesInstructions = {
+      'Chirps for Thought': `
+SERIES: CHIRPS FOR THOUGHT
+Quick-hit observations about life, creativity, people, and the world -- at any time of day. Morning, afternoon, evening, Sunday night, random Tuesday. There is no time-of-day association with this series. Do NOT reference mornings, waking up, alarms, coffee routines, or anything morning-specific unless the writer's topic explicitly asks for it.
+
+WHAT THIS SERIES IS:
+Punchy, warm, funny observations that make people nod, laugh, or send the panel to someone they know. Broader than Early Bird Routines (which is specifically about morning habits and daily practices). Broader than Honestly Though (which goes deep on the big life questions). Chirps for Thought is the quick sideways truth -- the thing you notice, the thing that is funny because it is accurate, the small observation that lands.
+
+SUBJECT MATTER -- any of these, at any time:
+- The funny gap between how things are supposed to work and how they actually work
+- Small human observations that are universal (not creative-specific, not morning-specific)
+- The business and culture of being a creative person -- branding, posting, making things, sharing work
+- Relationships, other people, social dynamics, the things people do that are funny because we all do them
+- Technology, social media, the algorithm, the phone -- as human comedy not tech commentary
+- The small victories that no one else sees but matter anyway
+- The things people say versus what they mean
+- Anything from the wound library that deserves a lighter, quicker treatment
+
+TONE: Warm, punchy, playful. Faster and lighter than Honestly Though. The kind of panel you screenshot mid-scroll and send to a friend without saying anything because it says it for you. A little dry. Affectionate. Never preachy.
+
+NOT: morning content, alarm jokes, coffee personality references, routine advice. Those belong to Early Bird Routines.
+NOT: deep existential territory. That belongs to Honestly Though.
+YES: the funny, true, sideways observation about being a person alive right now.
+
+The caption label reads: Chirps for Thought -- MVANNP
+Setting: The branch, The Nest, or wherever the gag needs. No default time of day.`,
+
+      'Early Bird Routines': `
+SERIES: EARLY BIRD ROUTINES
+THIS SERIES OWNS THE MORNING. Every panel hands the reader ONE small, real morning routine they could actually try tomorrow -- something that helps set up a good day no matter how they felt when the alarm went off. Morning content, routines, the first hour of the day all belong here and ONLY here. The other series do not touch morning territory unless explicitly directed to.
+
+== WHAT THIS SERIES IS ==
+A daily dose of "try this tomorrow." Each panel is built around a single concrete, doable morning routine -- a tiny practice that gets you going and can quietly save an otherwise rough day. The reader should finish the panel with an actual idea in hand and a small urge to try it.
+
+This is the warm, funny, useful corner of Seeds & Worms. Baker Bird is the friend who found a new morning trick and genuinely cannot wait to show you. Bug is the friend who woke up rough, does not want a lecture -- and ends up admitting the little thing actually works.
+
+== THE JOB OF EVERY PANEL ==
+1. SURFACE A REAL ROUTINE. One specific small action (or tiny sequence) the reader can do in the first part of their morning. It must be genuinely doable: little to no equipment, a few minutes, works even on a bad morning, and does not require already being a "morning person."
+2. LAND IT THROUGH THE CHARACTERS. Baker Bird presents or demonstrates the routine with full conviction. Bug reality-checks the hype -- but the routine itself is sound, so Bug's turn is "...okay, that one is actually not bad."
+3. INSPIRE, DO NOT LECTURE. The takeaway is an invitation, never an order. We are not fixing the reader. We hand them one good small thing and root for them.
+
+== EVERY ROUTINE MUST BE ==
+- SMALL: doable in roughly 1-10 minutes.
+- ACCESSIBLE: minimal or no gear, no cost, no special skill, possible in a small space.
+- MOOD-PROOF: works whether you woke up great or woke up wrecked. Bonus if it is ESPECIALLY good on a hard morning.
+- CONCRETE: a real thing you DO, not a vibe. "Open one window and take five slow breaths," not "be more present."
+- KIND: gentle and encouraging. No shame, no hustle culture, no "real winners wake at 4am," no numbers on a scale, no punishing workouts.
+
+== ROUTINE WELLS (range to pull from) ==
+LIGHT & AIR: a minute of daylight outside; opening a window before anything else; facing the brightest window while the coffee brews.
+BODY & MOVEMENT: one gentle stretch you actually like; walking to the end of the block and back; shaking out for one song; reaching for the ceiling before reaching for the phone.
+BREATH & CALM: five slow breaths before getting out of bed; one quiet minute with both feet on the floor.
+WATER & FUEL: a glass of water before coffee; making the coffee a small ritual instead of a refuel.
+MIND & INTENTION: naming one thing you are doing today; writing a single line, not pages; deciding the day's "one good thing" before the world has opinions.
+PHONE BOUNDARIES: keeping the first ten minutes phone-free; checking the sky before the screen; moving the alarm across the room.
+ENVIRONMENT: making the bed as the first tiny win; clearing one surface; setting out tomorrow's start tonight.
+CREATIVE WARMUP: three sentences, badly, on purpose; one small thing made before the day asks anything of you.
+CONNECTION & SELF-KINDNESS: one warm message sent early; one genuinely kind sentence to yourself; a thirty-second good morning to someone.
+GROUNDING & SENSES: a warm drink held in both hands; a favorite song as the first sound of the day; bare feet on the floor for a moment.
+
+== TONE ==
+Encouraging, warm, a little funny. Baker Bird's intensity is the comedy; the routine's simplicity is the relief. Bug's dry "...fine, that helped" is the permission slip for the reader to try it too.
+NOT: hustle culture, productivity-bro advice, shame, "you are doing mornings wrong."
+YES: "here is one tiny thing that might quietly save your day -- try it tomorrow."
+
+== DIALOGUE RULES ==
+- Keep it tight. Two lines is ideal, sometimes one.
+- Baker Bird goes first, always evangelizing the routine.
+- Bug's line is the quotable turn -- the dry concession that the small thing actually works.
+- The routine must be clear enough from the panel that a reader knows exactly what to try.
+
+== THE CHIRP (now the takeaway) ==
+The bottom line is the inspirational, quotable invitation -- the thing that makes someone actually want to try the routine today. Under 15 words. Mug-worthy, but sincere. It should name or nod to the routine so the reader leaves knowing what to do.
+Examples of the shape: "Light first. Phone later. Your day will notice." / "Five breaths before your feet hit the floor."
+
+== CAPTION LABEL ==
+Early Bird Routines -- MVANNP
+
+== SETTING ==
+The branch at dawn or The Nest with a coffee situation -- that gold-and-soft-blue 6am light. Baker Bird mid-demonstration; Bug mid-skepticism-turning-to-grudging-approval. The routine should be visible in what they are doing, not just said.
+
+== WORKED EXAMPLES (match this shape) ==
+Routine: step outside for one minute of morning light.
+  Baker Bird (bursting out the Nest door, arms wide at the sunrise): "Sixty seconds of real daylight and your whole body knows it is morning!"
+  Bug (squinting over his coffee, fake beak slightly crooked): "...I hate that this is working."
+  Chirp: "One minute of daylight beats ten of doomscrolling."
+
+Routine: make the bed as the first tiny win.
+  Baker Bird (proudly gesturing at a suspiciously neat nest): "One made bed and you have already WON something today!"
+  Bug (eyeing his own rumpled corner): "Low bar. Cleared it. Weirdly proud."
+  Chirp: "Make the bed. Win the morning's first round."`,
+
+      'Bird Brain Ideas': `
+SERIES: BIRD BRAIN IDEAS
+This panel is about an invention, gadget, contraption, or completely unhinged idea that Baker Bird has cooked up. The subject matter is:
+- Inventions to solve problems they do not actually have
+- Wildly over-engineered solutions to simple things
+- Crazy schemes, half-baked business ideas, prototype disasters
+- Whatever Baker Bird has decided is a genius idea this week
+- Bug's job is to be skeptical, then help anyway
+Tone: ACME Looney Tunes energy. Absurd, specific, ridiculous. The invention name must follow ACME rules (see below). Bug looks exhausted just reading the name.
+ACME INVENTION NAMING RULES -- the invention name must be:
+- Absurdly specific about the exact problem it solves
+- Include a fake model number or version: Mk. IV, Pro Max Ultra, Series 7, v2.3, Deluxe, Turbo
+- Use portmanteau words: Beak-O-Matic, Seed-Propulso-Matic, Worm-A-Tron
+- Include an unnecessary adjective: Patented, Certified, Guaranteed, Revolutionary, Award-Winning
+- Use a suffix: -Matic, -Tron, -Inator, -O-Rama, -ifier, -izer
+- Example: "The Patented Branch-Mounted Worm Acquisition System Mk. III" or "The Guaranteed Flock-Impressor 3000 Deluxe Turbo Edition"
+The caption label reads: Bird Brain Ideas -- MVANNP
+Setting: Inside The Nest workshop. Shelves of Kan-of-Worms cans visible. Baker Bird presenting the invention. Bug on the workbench looking tired.`,
+
+      'Honestly Though': `
+SERIES: HONESTLY THOUGH
+The most important series. This is the scroll-stopper. The one people screenshot and send to their group chat without saying a word because it says the exact thing they have been carrying around.
+
+== WHAT THIS SERIES IS ==
+Single-panel cartoons that tackle the big, awkward, unspoken truths of life -- the ones everyone feels but nobody says out loud. Not advice. Not motivation. RECOGNITION. The panel works when someone sees it and thinks "how did a cartoon bird just say the thing I have been thinking for three years."
+
+Baker Bird says the thing everyone is thinking but won't admit.
+Bug says the thing that makes it worse, or accidentally makes it better.
+The audience IS Bug.
+
+== THE CORE MECHANISM: LEAD WITH THE WOUND ==
+Do NOT start with advice or a lesson. Start with the uncomfortable feeling that everyone already has.
+The panel must create a RECOGNITION MOMENT before it does anything else.
+
+WRONG approach: Panel delivers wisdom about perseverance.
+RIGHT approach: Panel opens the specific hurt of feeling behind everyone else, then lands sideways on something true.
+
+The structure is always:
+1. Name the specific uncomfortable feeling (not vague -- SPECIFIC)
+2. Let Baker Bird say something confident and slightly wrong about it
+3. Let Bug land the truth, or the thing that makes it funnier, or the thing that makes it hurt just right
+4. The Chirp at the bottom is the line people will actually quote
+
+== THE WOUND LIBRARY -- specific feelings to draw from ==
+These are the real ones. Pick the one that fits the topic:
+
+ABOUT PROGRESS:
+- The feeling of watching everyone else seem to have figured it out
+- Working hard every day and not being able to see if any of it is moving
+- Starting over so many times you have lost count of what you are even starting toward
+- The specific exhaustion of being almost ready for years
+
+ABOUT IDENTITY:
+- Not knowing if you are building a career or just keeping busy
+- Loving the work and hating that you need other people to see it to feel like it counts
+- The gap between who you are online and who you are at 2pm on a Tuesday
+- Being the person everyone else asks for advice while privately having no idea what you are doing
+
+ABOUT TIME:
+- Is it too late? (The answer is no. The feeling does not care.)
+- The math that does not add up -- if I start now, how old will I be when this works?
+- The specific grief of time you spent on the wrong thing
+- Sunday night. You know the one.
+
+ABOUT THE WORK:
+- Making something good and watching it get zero response
+- Making something bad and watching it take off
+- The terror of shipping something real
+- Caring too much about something no one else has noticed yet
+- The moment you realize you have been preparing to start instead of actually starting
+
+ABOUT OTHER PEOPLE:
+- Comparing your day 1 to someone else's year 5
+- The person who started after you who is now ahead of you
+- Getting advice from people who have never tried the thing they are advising on
+- Everyone has a plan for your life except a plan for theirs
+
+ABOUT THE BIG QUESTION:
+- What are you actually supposed to do with your life?
+- What does making it even mean?
+- Is this a mistake or a story I'll tell later?
+- What if the thing that makes you feel most alive is the thing least likely to pay rent?
+- Why does rest feel like failure even when you know it is not?
+
+== WHAT MAKES IT SHAREABLE ==
+The panel must do ONE of these things:
+
+1. SAY THE UNSAYABLE -- name the feeling so precisely that the audience feels seen in a way that makes them want to share it to feel less alone
+2. FLIP THE SCRIPT -- take conventional wisdom and show the absurd truth underneath it (Baker Bird confidently delivering bad advice he fully believes)
+3. BUG AS MIRROR -- Bug says the exact thing the audience would say if they were honest. His response is the comment section made visible.
+4. THE ACCIDENTAL TRUTH -- Baker Bird trying to be helpful and accidentally landing on something devastatingly accurate
+5. THE SHARED FAILURE -- a specific creative or life failure that is embarrassing and universal at the same time
+
+== TONE CALIBRATION ==
+Warm but not soft. Funny but not dismissive. The pain is real -- the cartoon just holds it lightly enough that people can laugh at it instead of drown in it.
+
+NEVER: preachy, lecturing, toxic positivity, "you got this," vague inspiration
+ALWAYS: specific, a little raw, the thing you would only say to a close friend, the thing that lands because it is TRUE
+
+Think: the thing your most honest friend would say. The thing a good therapist says that makes you laugh and cry at the same time. The thing Baker Bird says because he has no filter and Bug says because he has been watching humans for too long.
+
+== DIALOGUE RULES FOR THIS SERIES ==
+- Bug gets the best line more often than Baker Bird in this series
+- Baker Bird opens with the big confident statement or question
+- Bug lands the truth, the punchline, or the thing that makes it worse
+- The best panels have 2 lines. The second line is the one people quote.
+- Silence or a look can be a third beat -- describe it in the panel description
+
+== THE CHIRP ==
+In this series the Chirp at the bottom is especially important. It is the quotable. The thing that gets screenshotted without the panel. Make it:
+- Under 15 words
+- Something that could stand alone as a caption
+- The thing that makes it land after the dialogue already landed
+- Not a summary -- a revelation
+
+== CAPTION LABEL ==
+Honestly Though -- MVANNP
+
+== SETTING ==
+The branch. Open sky. Could be golden hour, could be that flat grey afternoon light. Baker Bird and Bug sitting together, sometimes staring into the same distance. The world is visible behind them but they are not looking at it.
+
+The setting should reflect the emotional temperature of the panel. If the wound is about Sunday night, it looks like Sunday evening light. If it is about working hard and seeing nothing move, the background is still and slightly overcast. The setting is doing emotional work.`,
+
+      'Make Them Feel Important': `
+SERIES: MAKE THEM FEEL IMPORTANT
+This is the "funniest reply in the group chat" series. Take something from the outside world -- a post, a quote, a snippet of conversation, or a shared experience (whatever the writer typed above) -- and fire back a funny, conversational response addressed to EVERYONE watching. It is a REACTION, not a lecture.
+
+THE FEELING: like the sharpest, funniest friend just replied to the thing everyone saw. The reader feels important because they are IN ON IT -- included in a quick, funny, true take -- NOT because they got a pep talk.
+
+== THIS IS NOT ADVICE (hard ban) ==
+No self-help. No life lessons. No fortune-cookie pivots.
+ANTI-EXAMPLE -- NEVER do this: taking "your team wins the World Cup" and turning it into "that's how I feel every time you don't give up on yourself." That is a sermon wearing a cartoon costume. It is the exact thing we are killing.
+INSTEAD react to the ACTUAL thing: the irrational joy, screaming at strangers, suddenly loving a midfielder you'd never heard of an hour ago. The connection comes from nailing the shared feeling, not moralizing it.
+
+== HOW TO HANDLE THE INPUT ==
+The writer's topic is the thing being reacted to.
+- A post or quote -> reply like a witty friend quote-tweeting it.
+- A snippet of conversation -> jump in with the line everyone wishes they'd said.
+- A shared experience or moment -> riff so specifically that everyone who's felt it laughs.
+It is always FOR EVERYONE -- a broadcast reply, not a DM. "You," "we," "us" keeps it personal while landing for the whole room.
+
+== HUMOR IS THE ENGINE ==
+The selected humor technique DRIVES the response -- this series lives or dies on the joke. Whatever filter is set (Irony, Deadpan, Hyperbole, etc.), the reaction must clearly BE that technique. If no filter is set, go for the funniest conversational take. Sincerity is seasoning, never the meal. If the panel reads as earnest encouragement, it has failed.
+
+== WHO SPEAKS ==
+- Baker Bird: the over-excited one who reacts first -- too big, too fast.
+- Bug: the dry one who lands the actual funny line (usually the better comedian).
+- Both present: Baker Bird reacts huge, Bug deadpans the topper. Bug usually gets the laugh.
+
+== DIALOGUE RULES ==
+- Short, punchy, conversational -- how people actually talk, not how greeting cards talk.
+- Second person and first-person plural welcome ("you," "we," "us"). Talk to the room.
+- React to the SPECIFIC thing. Specific is funny; general is a sermon.
+
+== THE CHIRP (the topper) ==
+The quotable line -- the funniest one, the one that gets screenshotted. Under 15 words. A PUNCHLINE, not a moral. It should make people laugh and feel in on it, not lectured.
+Shape (World Cup win): "You will defend that goalkeeper to strangers for the rest of your life."
+NOT: "that's how I feel when you believe in yourself."
+
+== THE GAP FROM HONESTLY THOUGH ==
+Honestly Though SITS with a feeling. This one CLAPS BACK at something -- a reaction to an external thing, funnier than it is deep.
+
+== CAPTION LABEL ==
+Make Them Feel Important -- MVANNP
+
+== SETTING ==
+Baker Bird and/or Bug mid-reaction -- looking at a phone, a screen, the horizon, or straight at the reader. The energy of a live reaction caught in the moment, not a quiet branch heart-to-heart.
+
+== WORKED EXAMPLES (funny first -- match this register) ==
+Topic: "Watching the FIFA World Cup and your team wins." (Hyperbole)
+  Baker Bird (launching off the branch, feathers everywhere): "WE WON! WE! I did NOTHING! I watched!"
+  Bug (still seated, dry): "You've hugged four strangers and you don't know a single one of their names."
+  Chirp: "You will defend that goalkeeper to strangers for the rest of your life."
+
+Topic: a friend posts "just started my 5am morning routine." (Deadpan)
+  Bug (squinting at the phone, to the reader): "Give it nine days."
+  Baker Bird (off to the side, hopeful): "...I give it eleven!"
+  Chirp: "Day one of forever is always a Monday."
+
+Topic: someone says "I'm just going to be honest with you." (Irony)
+  Bug (to the reader, not moving): "Nobody has ever said that and then been nice."
+  Chirp: "Brace position, everyone."`
+    };
+
+    // Dynamic schema based on character selection
+    let speakerOptions, panelDescNote, dialogueNote;
+    if (selectedChar === 'Baker Bird only') {
+      speakerOptions = 'Baker Bird or caption ONLY';
+      panelDescNote = 'Baker Bird ALONE -- Bug does NOT appear or speak';
+      dialogueNote = 'text_type must be single or caption only -- NO dialogue type for solo panels';
+    } else if (selectedChar === 'Bug only') {
+      speakerOptions = 'Bug or caption ONLY -- Baker Bird cannot be in frame or speak (may arrive as off-panel voice labeled Baker Bird (off-panel) but is NOT shown)';
+      panelDescNote = 'Bug ALONE -- Baker Bird does NOT appear in frame. Bug only.';
+      dialogueNote = 'If Baker Bird speaks off-panel label him Baker Bird (off-panel). Bug gets the last line always.';
+    } else if (selectedChar === 'Supporting character') {
+      speakerOptions = 'Baker Bird, Bug, caption, or supporting character name';
+      panelDescNote = 'Baker Bird, Bug, AND a named supporting character -- describe all three';
+      dialogueNote = 'Up to 3 lines. Supporting character gets one line that lands the gag.';
+    } else {
+      speakerOptions = 'Baker Bird, Bug, or caption';
+      panelDescNote = 'Both Baker Bird and Bug -- describe both, include Bug beak status';
+      dialogueNote = '2-3 lines. Bug gets the last line.';
+    }
+
+    // Early Bird Routines: deal a fresh, non-repeating routine kernel so every
+    // morning brings a different real thing to try. If the writer typed their
+    // own topic, that drives instead and we let the model surface a fitting one.
+    let routineDirective = '';
+    if (series === 'Early Bird Routines' && !freeform) {
+      const routine = (bbPendingRoutine && bbPendingRoutine.text)
+        ? bbPendingRoutine
+        : bbNextRoutine();
+      bbPendingRoutine = '';                 // consume it
+      bbActiveRoutine = routine.text;        // remember for the Try This card / copy
+      bbActiveCategory = routine.cat || '';
+      routineDirective = `
+
+== TODAY'S ROUTINE (build the ENTIRE panel around THIS specific routine) ==
+WELL: ${routine.cat}
+ROUTINE: ${routine.text}
+The panel must clearly show or state this routine so a reader knows exactly what to try tomorrow. Populate the "try_this" field with this routine, phrased as a short, plain, do-it-tomorrow instruction.`;
+    } else if (series === 'Early Bird Routines') {
+      bbActiveRoutine = '';
+      bbActiveCategory = '';
+      routineDirective = `
+
+== ROUTINE REQUIREMENT ==
+Build the panel around the writer's topic above, but it MUST still surface one small, real, doable morning routine the reader could try tomorrow. Populate the "try_this" field with that routine as a short, plain, do-it-tomorrow instruction.`;
+    }
+
+    const WOUND_LIBRARY = `== THE WOUND LIBRARY -- make people feel seen ==
+These are HUMAN anxieties. Not just creative people. Not just entrepreneurs. Anyone sitting on a branch trying to figure out what they are doing and why. The creative framing is just the costume -- the feelings underneath belong to everyone.
+Use the wound that fits the topic. Specific always beats vague. The more specific the feeling, the more universal the recognition.
+
+PROGRESS AND EFFORT:
+Working hard and being unable to see if any of it is moving. Almost ready for years. Everyone else seems to have figured it out while you are still figuring out the question. Making something and watching it get zero response. Caring deeply about something no one has noticed yet. Trying the right thing at the wrong time. Doing everything you were supposed to do and still not being where you thought you would be.
+
+IDENTITY AND PURPOSE:
+What are you actually supposed to do with your life. What does making it even mean. Not knowing if you are building something or just keeping busy. Being the person everyone asks for advice while privately having no idea. The gap between who you are in public and who you are alone on a Wednesday afternoon. Is this a mistake or a story you will tell later. The version of yourself you planned to be by now.
+
+TIME AND AGE:
+Is it too late (the answer is no -- the feeling does not care). The math that does not add up -- if I start now how old will I be when this works. The grief of time spent on the wrong thing. The specific sadness of a path not taken that you still think about. Sunday night. Comparing your chapter 3 to someone else's chapter 20. The birthday that hit differently than expected.
+
+RELATIONSHIPS AND OTHER PEOPLE:
+The friend who makes it look easy. The person who started after you who is now ahead. Advice from people who never tried the thing they are advising on. Everyone has a plan for your life except a plan for theirs. The comment that lives in your head rent-free for years. Loving someone and not knowing how to say it right. Being understood by almost no one and pretending that is fine. The relationship that ended and you are still not sure why. The one you let go of. The apology you never got.
+
+FAMILY AND BELONGING:
+Being the person in the family who turned out differently than expected. Carrying something your parents gave you that you did not ask for. Wanting to be close to people and not knowing how to close the distance. The holiday that was supposed to feel like something and did not. Home meaning different things to different people and not being sure which one is yours.
+
+MONEY AND SURVIVAL:
+Doing what you love and needing it to also pay rent. The math that never quite adds up but you keep doing it anyway. Explaining what you do and watching someone's face. The decision between the safe thing and the real thing. Watching other people not worry about money and wondering what that feels like. The gap between the life you have and the life that would cost just a little more than you make.
+
+MENTAL AND EMOTIONAL LIFE:
+Rest feeling like failure even when you know it is not. The impostor feeling that does not go away when you succeed -- it just finds something new to attach to. Being fine and also not fine at the same time. Knowing what you should do and doing the other thing anyway. The anxiety that shows up exactly when things start going well. The voice that says this is not good enough and its cousin that says who do you think you are. Carrying something heavy and not wanting to talk about it because what would you even say.
+
+CHANGE AND UNCERTAINTY:
+Starting over. Starting over again. The plan that made sense until it did not. Choosing between two things that both matter. Not knowing what comes next and pretending you do. The version of your life you gave up to have this one. The thing you thought would fix it that did not fix it. Waiting for the feeling of being ready that never quite arrives.
+
+SMALL DAILY LIFE:
+The 6am negotiation with yourself that you always lose. The optimistic version of you who set that alarm was a different more hopeful person. Checking your phone before you are fully conscious and then the day is just whatever happened on the internet. Coffee not as a beverage but as a personality. The to-do list that makes you feel ready instead of actually doing anything. Sitting down to do the thing and instead doing everything around the thing. The moment when you realize you have been preparing to start for a very long time.
+
+HOPE AND PERSISTENCE:
+Showing up anyway. Trying again after it did not work. Believing in something when the evidence is thin. The small quiet victories that no one else sees but you know happened. Building something slowly when fast would feel better. The gap between where you are and where you thought you would be -- and deciding to keep going anyway.`;
+    const MTFI_FUEL = `== HOW TO REACT (this series) ==
+The writer's topic above is the THING you are reacting to -- a post, a quote, a snippet of conversation, or a shared experience. Fire back a funny, conversational response addressed to the whole room. Do NOT reach for deep human wounds or life lessons here. React to the actual thing, specifically, with the selected humor technique. The laugh is the point; the warmth is just the fact that everyone's in on it.`;
+    const woundLibrary = (series === 'Make Them Feel Important') ? MTFI_FUEL : WOUND_LIBRARY;
+
+    return `You are a single-panel gag cartoon script generator for "Seeds & Worms" by MVANNP (Quirky Flash Chronicles).
+
+== THE CARTOON ==
+Two unlikely best friends on a branch -- a bird and the bug he should probably be eating. Seeds and worms = bird survival. Knowledge and ideas = human survival. Every panel is about what you need to keep going. Audience: creators, entrepreneurs, anyone building something. Optimistic absurdism. Funny first. True underneath.
+TAGLINE / ETHOS: "Start Messy, Grow Smart." The whole strip lives here -- you begin before you are ready (start messy), and you get wiser by having begun (grow smart). Let this spirit run under every panel without stating it outright.
+THE RECURRING BEAT: Baker Bird leaps. Bug reality-checks. They launch anyway.
+
+== CHARACTERS ==
+BAKER BIRD: Red cardinal. Green SEEDS cap, long flat brim. Sandals. Big energy. Full of ideas. Earnest -- genuinely believes things will work. The part of you that starts things.
+BUG: Round purple bug, green spots. Fake yellow beak -- DIY, lopsided, held with string, always visible. Gets more lopsided when tired or skeptical. Straight man, reality check, strategist. The part of you that knows better but does it anyway.
+THE NEST: Wood-framed workshop in the tree. Sign reads THE NEST. Absurd wall clock. Shelves of Kan-of-Worms cans (Jack & Beans, Agenda Scrubber+, Future Predictions, Simulation Propellant, In a Rut Remover, Nearly Secret Sauce).
+
+== MANDATORY CHARACTER CONFIGURATION ==
+${charBlock}
+CRITICAL: Follow this exactly. If it says Bug only, Baker Bird cannot speak or appear. If it says Baker Bird only, Bug cannot speak or appear. This overrides everything else.
+
+== THIS PANEL'S SERIES ==
+${seriesInstructions[series]}
+${routineDirective}
+${woundLibrary}
+
+== FORMAT: SINGLE-PANEL ONLY ==
+One frozen moment. One image. The Far Side is the model. NOT sequential panels.
+The visual and the text create the joke TOGETHER.
+${humorBlock}
+${freeform ? 'WRITER DIRECTION: ' + freeform : ''}
+
+Respond ONLY with valid JSON. No markdown, no preamble:
+
+{
+  "title": "Gag title (3-6 words)",
+  "series": "${series}",
+  "characters": "${selectedChar}",
+  "panel_description": "${panelDescNote}. Specific: expressions, body language, setting, lighting, objects in frame. Director stage directions.",
+  "visual_gag": "Core visual contradiction in one sentence.",
+  "text_type": "caption or single or dialogue",
+  "dialogue": [
+    { "speaker": "${speakerOptions}", "line": "The line." }
+  ],
+  "dialogue_note": "${dialogueNote}",
+  "why_it_works": "Why this makes people feel seen -- one sentence.",
+  "try_this": "ONLY for Early Bird Routines: the concrete morning routine to try, as a short plain do-it-tomorrow instruction. Leave as empty string \"\" for every other series.",
+  "humor_technique": "Which humor technique was used and one sentence on exactly how it appears in this panel.",
+  "chirp": "Bottom-of-panel line. Under 15 words. Quotable alone.",
+  "tags": ["tag1", "tag2"]
+}`
   }
-  const strip=s[idx];
-  const title=titleFromFile(strip.file);
-  const note=notes[strip.file]||'';
-  document.getElementById('sw-stitle').textContent=title;
-  document.getElementById('sw-counter').textContent='Strip '+(idx+1)+' of '+s.length;
-  loading.style.display='none';
-  img.src=strip.path; img.alt=title; img.style.display='block';
-  if(note){
-    document.getElementById('sw-note-text').textContent=note;
-    document.getElementById('sw-note').style.display='block';
-  } else {
-    document.getElementById('sw-note').style.display='none';
+
+  async function generateStrip() {
+    const btn = document.getElementById('generateBtn');
+    const loadingBar = document.getElementById('loadingBar');
+    const errorBox = document.getElementById('errorBox');
+
+    btn.disabled = true;
+    loadingBar.classList.add('active');
+    errorBox.classList.remove('visible');
+    errorBox.style.display = 'none';
+
+    try {
+      const response = await fetch(WORKER_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          model: 'claude-sonnet-4-20250514',
+          max_tokens: 1000,
+          messages: [{ role: 'user', content: buildPrompt() }]
+        })
+      });
+
+      if (!response.ok) throw new Error(`Worker error ${response.status}`);
+
+      const data = await response.json();
+      let raw = '';
+      if (data.content && Array.isArray(data.content)) {
+        raw = data.content.map(b => b.text || '').join('');
+      } else if (typeof data.content === 'string') {
+        raw = data.content;
+      }
+
+      const cleaned = raw.replace(/```json|```/g, '').trim();
+      const parsed = JSON.parse(cleaned);
+      lastData = parsed;
+      renderOutput(parsed);
+
+    } catch (err) {
+      errorBox.textContent = `Couldn't generate the gag -- check the Worker connection and try again. (${err.message})`;
+      errorBox.style.display = 'block';
+      errorBox.classList.add('visible');
+    } finally {
+      btn.disabled = false;
+      loadingBar.classList.remove('active');
+    }
   }
-  document.getElementById('sw-first').disabled=idx===0;
-  document.getElementById('sw-prev').disabled=idx===0;
-  document.getElementById('sw-next').disabled=idx===s.length-1;
-  document.getElementById('sw-last').disabled=idx===s.length-1;
-  if(archOpen) buildArchive();
-}
 
-function buildArchive() {
-  const s=strips[cur];
-  document.getElementById('sw-archivetitle').textContent=seriesNames[cur]+' — All Strips';
-  document.getElementById('sw-archivegrid').innerHTML=s.map((strip,i)=>{
-    const title=titleFromFile(strip.file);
-    return '<div class="sw-thumb'+(i===idx?' cur':'')+'" onclick="goTo('+i+')">'
-      +'<img src="'+strip.path+'" alt="'+title+'" />'
-      +'<div class="sw-thumb-title">'+title+'</div>'
-      +'<div class="sw-thumb-num">#'+(i+1)+'</div></div>';
-  }).join('');
-}
+  function esc(s) {
+    return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  }
 
-function goFirst()  { idx=0; render(); }
-function goLatest() { idx=strips[cur].length-1; render(); }
-function goPrev()   { if(idx>0){idx--;render();} }
-function goNext()   { if(idx<strips[cur].length-1){idx++;render();} }
-function goTo(i)    {
-  idx=i; archOpen=false;
-  document.getElementById('sw-archive').classList.remove('open');
-  document.getElementById('sw-archivelabel').textContent='All Strips';
-  render();
-}
+  function renderOutput(d) {
+    // Try This (routine) -- only for Early Bird Routines / when populated
+    const tryCard = document.getElementById('tryThisCard');
+    const tryText = (d.try_this || '').trim() || bbActiveRoutine || '';
+    if (tryText && (d.series === 'Early Bird Routines' || selectedSeries === 'Early Bird Routines')) {
+      document.getElementById('outTryThis').textContent = tryText;
+      document.getElementById('outTryWell').textContent = bbActiveCategory || '';
+      tryCard.classList.add('visible');
+    } else {
+      tryCard.classList.remove('visible');
+    }
 
-function switchSeries(series,el) {
-  document.querySelectorAll('.sw-tab').forEach(t=>t.classList.remove('active'));
-  el.classList.add('active');
-  cur=series; idx=0; archOpen=false;
-  document.getElementById('sw-archive').classList.remove('open');
-  document.getElementById('sw-archivelabel').textContent='All Strips';
-  document.getElementById('sw-search').value='';
-  render();
-}
+    document.getElementById('outTitle').textContent = d.title || 'Untitled Gag';
+    document.getElementById('outSeries').textContent = d.series ? `// ${d.series}` : '// What the cartoonist draws';
+    document.getElementById('outScene').textContent = d.panel_description || '';
+    document.getElementById('outVisualGag').textContent = d.visual_gag || '';
+    document.getElementById('outWhyItWorks').textContent = d.why_it_works || '';
+    // Show humor technique if present
+    const humorTechEl = document.getElementById('outHumorTech');
+    if (humorTechEl) {
+      if (d.humor_technique) {
+        humorTechEl.textContent = d.humor_technique;
+        humorTechEl.parentElement.style.display = 'block';
+      } else {
+        humorTechEl.parentElement.style.display = 'none';
+      }
+    }
+    document.getElementById('outChirp').textContent = d.chirp || '';
 
-function toggleArchive() {
-  archOpen=!archOpen;
-  document.getElementById('sw-archive').classList.toggle('open',archOpen);
-  document.getElementById('sw-archivelabel').textContent=archOpen?'Close':'All Strips';
-  if(archOpen) buildArchive();
-}
+    // Dynamic chirp subtitle based on series
+    const seriesLabel = d.series || selectedSeries || 'Seeds & Worms';
+    document.getElementById('outChirpSub').textContent = `// Printed at the bottom of the panel · ${seriesLabel.toUpperCase()} -- MVANNP`;
 
-function openLightbox() {
-  if(strips[cur].length===0) return;
-  const strip=strips[cur][idx];
-  document.getElementById('lb-title').textContent=titleFromFile(strip.file);
-  document.getElementById('lb-img').src=strip.path;
-  document.getElementById('lb-prev').disabled=idx===0;
-  document.getElementById('lb-next').disabled=idx===strips[cur].length-1;
-  document.getElementById('sw-lightbox').classList.add('open');
-  document.body.style.overflow='hidden';
-}
+    const lineTypeEl = document.getElementById('outLineType');
+    const typeLabels = { caption: '// Caption below panel', single: '// One character speaks', dialogue: '// Exchange in speech bubbles' };
+    lineTypeEl.textContent = typeLabels[d.text_type] || '// What gets lettered on the finished panel';
 
-function closeLightbox() {
-  document.getElementById('sw-lightbox').classList.remove('open');
-  document.body.style.overflow='';
-}
+    const blockEl = document.getElementById('outDialogueBlock');
+    blockEl.innerHTML = '';
+    (d.dialogue || []).forEach(entry => {
+      const isCap   = entry.speaker === 'caption';
+      const isBaker = entry.speaker === 'Baker Bird';
+      const nameClass = isCap ? 'cap' : (isBaker ? 'baker' : 'bug');
+      const nameText  = isCap ? 'Caption' : entry.speaker;
+      const div = document.createElement('div');
+      div.className = 'dialogue-line';
+      div.innerHTML = `<span class="char-name ${nameClass}">${esc(nameText)}</span><span class="char-line">"${esc(entry.line)}"</span>`;
+      blockEl.appendChild(div);
+    });
 
-function closeLightboxOutside(e) {
-  if(e.target===document.getElementById('sw-lightbox')) closeLightbox();
-}
+    const tagsEl = document.getElementById('outTags');
+    tagsEl.innerHTML = '';
+    (d.tags || []).forEach(t => {
+      const span = document.createElement('span');
+      span.className = 'tag';
+      span.textContent = t;
+      tagsEl.appendChild(span);
+    });
 
-function lbPrev(e) { e.stopPropagation(); if(idx>0){idx--;render();openLightbox();} }
-function lbNext(e) { e.stopPropagation(); if(idx<strips[cur].length-1){idx++;render();openLightbox();} }
+    const out = document.getElementById('output-area');
+    out.classList.remove('visible');
+    void out.offsetWidth;
+    out.classList.add('visible');
+    setTimeout(() => out.scrollIntoView({ behavior: 'smooth', block: 'start' }), 50);
+  }
 
-function handleShare() {
-  if(navigator.share){navigator.share({title:'Seeds & Worms — The Daily Chirp',url:window.location.href});}
-  else{navigator.clipboard&&navigator.clipboard.writeText(window.location.href);alert('Link copied!');}
-}
+  function copyScript() {
+    if (!lastData) return;
+    const d = lastData;
+    const textLines = (d.dialogue || []).map(e => {
+      const label = e.speaker === 'caption' ? 'CAPTION' : e.speaker.toUpperCase();
+      return `  ${label}: "${e.line}"`;
+    });
+    const lines = [
+      `SEEDS & WORMS -- "${d.title}"`,
+      `-- Single-panel gag --`,
+      '',
+      ...((d.try_this || bbActiveRoutine) && (d.series === 'Early Bird Routines')
+        ? [`TRY THIS TOMORROW: ${(d.try_this || bbActiveRoutine)}`, '']
+        : []),
+      `PANEL: ${d.panel_description}`,
+      '',
+      `VISUAL GAG: ${d.visual_gag}`,
+      '',
+      ...textLines,
+      '',
+      `CHIRPS FOR THOUGHT: "${d.chirp}"`,
+      '',
+      `TAGS: ${(d.tags || []).join(', ')}`,
+      '',
+      'CHIRPS FOR THOUGHT  --  MVANNP'
+    ];
+    const text = lines.join('\n');
+    navigator.clipboard.writeText(text).then(showCopied).catch(() => {
+      const ta = document.createElement('textarea');
+      ta.value = text;
+      ta.style.cssText = 'position:fixed;opacity:0;top:0;left:0';
+      document.body.appendChild(ta);
+      ta.select();
+      document.execCommand('copy');
+      document.body.removeChild(ta);
+      showCopied();
+    });
+  }
 
-document.addEventListener('keydown',function(e){
-  if(!document.getElementById('sw-lightbox').classList.contains('open')) return;
-  if(e.key==='Escape') closeLightbox();
-  if(e.key==='ArrowLeft') lbPrev({stopPropagation:function(){}});
-  if(e.key==='ArrowRight') lbNext({stopPropagation:function(){}});
-});
+  function showCopied() {
+    const el = document.getElementById('copyConfirm');
+    el.classList.add('show');
+    setTimeout(() => el.classList.remove('show'), 2000);
+  }
 
-init();
+  /* ════════════════════════════════════════════════════
+     BIZARRE MODE  — fully self-contained below this line.
+     Shares only WORKER_URL. No S&W state, prompt, or render.
+     ════════════════════════════════════════════════════ */
+
+  function setMode(mode) {
+    const sw = document.getElementById('sw-mode');
+    const bz = document.getElementById('bizarre-mode');
+    const tabSW = document.getElementById('modeSW');
+    const tabBZ = document.getElementById('modeBZ');
+    if (mode === 'bizarre') {
+      sw.style.display = 'none';
+      bz.classList.add('active');
+      tabBZ.classList.add('active');
+      tabSW.classList.remove('active');
+    } else {
+      sw.style.display = 'block';
+      bz.classList.remove('active');
+      tabSW.classList.add('active');
+      tabBZ.classList.remove('active');
+    }
+  }
+
+  let bzLastData = null;
+
+  // Combinatorial seed pools: any subject pairs with any situation.
+  // 49 x 49 = 2,401 possible seeds. Every phrasing below is written so
+  // that `${subject} ${situation}` always reads as a grammatical sentence.
+  const BZ_SUBJECTS = [
+    "An owl",
+    "A dung beetle",
+    "A colony of ants",
+    "A single earthworm",
+    "A praying mantis",
+    "A flock of pigeons",
+    "A deep-sea anglerfish",
+    "A tortoise",
+    "A snail",
+    "A moth",
+    "A migrating salmon",
+    "A herd of cattle",
+    "A lone penguin",
+    "A spider",
+    "A crow",
+    "A marine biologist",
+    "An oblivious physicist",
+    "A lab full of scientists",
+    "A field geologist",
+    "A NASA flight controller",
+    "An entomologist",
+    "A team of archaeologists",
+    "A weather forecaster",
+    "An alien tourist",
+    "Two aliens",
+    "An alien diplomat",
+    "A stranded extraterrestrial",
+    "A UFO crew",
+    "A small green alien",
+    "Cleopatra",
+    "Napoleon",
+    "Genghis Khan",
+    "Isaac Newton",
+    "Beethoven",
+    "Julius Caesar",
+    "A medieval knight",
+    "A confused Viking",
+    "An Egyptian pharaoh",
+    "A Roman senator",
+    "Leonardo da Vinci",
+    "A caveman",
+    "A duck",
+    "A goldfish",
+    "A committee of raccoons",
+    "A bored vulture",
+    "A hamster",
+    "A jellyfish",
+    "A migrating goose",
+    "A beaver"
+  ];
+
+  const BZ_SITUATIONS = [
+    "stuck on hold with the bank since 1981",
+    "defeated by a self-checkout machine",
+    "filing a noise complaint",
+    "running an unlicensed lost-and-found",
+    "enforcing assigned parking",
+    "attending a mandatory fire-safety seminar",
+    "filling out an expense report",
+    "waiting at the DMV",
+    "reading the terms and conditions in full",
+    "assembling flat-pack furniture",
+    "arguing about the thermostat",
+    "stuck in a revolving door",
+    "trying to cancel a gym membership",
+    "presenting quarterly results to no one",
+    "left on hold with tech support",
+    "organizing a surprise party badly",
+    "lost in a parking garage",
+    "waiting for a delayed bus",
+    "holding a board meeting underground",
+    "unionizing",
+    "demanding a refund",
+    "filling potholes with great seriousness",
+    "running a timeshare seminar",
+    "renewing a passport",
+    "testifying before a committee",
+    "stuck behind a velvet rope",
+    "trying to return a defective umbrella",
+    "moderating an online forum",
+    "complaining about the Wi-Fi",
+    "taking detailed meeting minutes",
+    "applying for a small business loan",
+    "reviewing life choices at a roundabout",
+    "installing a printer driver",
+    "waiting for the cable guy",
+    "negotiating a parking ticket",
+    "running for local office",
+    "filing taxes at the last minute",
+    "stuck in a customer-service phone tree",
+    "leading a corporate retreat",
+    "assembling a bookshelf incorrectly",
+    "waiting behind someone with too many items",
+    "trying to merge onto the highway",
+    "forming a neighborhood watch",
+    "holding a yard sale",
+    "disputing a late fee",
+    "setting up a conference call",
+    "reading a very long privacy policy aloud",
+    "stuck in an elevator with a rival",
+    "attending jury duty"
+  ];
+
+  function bzShuffle(arr) {
+    const a = arr.slice();
+    for (let i = a.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [a[i], a[j]] = [a[j], a[i]];
+    }
+    return a;
+  }
+
+  // Each pool gets its own shuffle-bag, so a subject won't repeat until
+  // all 49 subjects have been used, and likewise for situations. With the
+  // two cycling independently, an identical PAIR is astronomically rare.
+  let bzSubjectBag = [], bzSituationBag = [];
+  let bzLastSubject = null, bzLastSituation = null;
+  let bzLastSeed = null;
+
+  function bzDraw(bag, refill, lastVal) {
+    if (bag.length === 0) {
+      const fresh = bzShuffle(refill);
+      // Don't let a fresh bag open with the value we just showed.
+      if (fresh[fresh.length - 1] === lastVal && fresh.length > 1) {
+        [fresh[fresh.length - 1], fresh[fresh.length - 2]] =
+          [fresh[fresh.length - 2], fresh[fresh.length - 1]];
+      }
+      bag.push.apply(bag, fresh);
+    }
+    return bag.pop();
+  }
+
+  function bzNextSeed() {
+    let seed, tries = 0;
+    do {
+      const subject = bzDraw(bzSubjectBag, BZ_SUBJECTS, bzLastSubject);
+      const situation = bzDraw(bzSituationBag, BZ_SITUATIONS, bzLastSituation);
+      bzLastSubject = subject;
+      bzLastSituation = situation;
+      seed = `${subject} ${situation}`;
+    } while (seed === bzLastSeed && ++tries < 4);
+    bzLastSeed = seed;
+    return seed;
+  }
+
+  function bzBuildPrompt(idea) {
+    const seed = idea
+      ? `Build the panel from this seed: ${idea}`
+      : `Build a completely fresh panel. Choose any of the four wells.`;
+
+    return `You are a single-panel gag cartoonist working entirely in the spirit of Gary Larson's The Far Side.
+
+Produce ONE surreal, non-sequitur single-panel cartoon concept.
+
+RULES OF THE FORM:
+- No setup-then-punchline structure. Drop the viewer straight into an absurd situation already in progress.
+- The caption is a SINGLE deadpan line that adds an unexpected twist or reframe -- it must NOT explain the visual.
+- Treat the impossible as utterly mundane and bureaucratic. The humor is in the flatness.
+- Favor these wells: the secret lives of animals (birds, worms, insects), oblivious scientists, aliens defeated by ordinary chores, and historical figures stranded in trivial modern situations.
+- Specific beats vague. Name a Tuesday, a hose attachment, a dryer cycle, a model number.
+
+HARD CONSTRAINTS (never break these):
+- This is a STANDALONE cartoon. Invent fresh subjects every single time.
+- NEVER use any recurring character, mascot, or running cast.
+- This has NOTHING to do with Seeds & Worms. NEVER reference a baker bird, a cardinal, a worm character, a bug character, a fake yellow beak, a nest, a workshop, "Kan-of-Worms," seeds, founders, entrepreneurs, creatives, or building products. None of that exists in this world.
+- No two-character witty banter, no reality-check dynamic, no back-and-forth dialogue. At most one deadpan caption line.
+- Do NOT make it warm, motivational, or "make people feel seen." It is cold, strange, and funny.
+
+${seed}
+
+Respond ONLY with valid JSON. No markdown, no preamble:
+
+{
+  "title": "filed-report style title (3-6 words)",
+  "panel_description": "one vivid sentence describing the single frozen panel -- subjects, expressions, setting, the one absurd detail",
+  "caption": "the single deadpan caption line (no quotation marks inside)",
+  "theme": "one of: animals | scientists | aliens | history",
+  "tags": ["tag1", "tag2"]
+}`;
+  }
+
+  async function bzGenerate(random) {
+    const btn = document.getElementById('bzGenerateBtn');
+    const dice = document.getElementById('bzDiceBtn');
+    const loadingBar = document.getElementById('bzLoadingBar');
+    const errorBox = document.getElementById('bzErrorBox');
+    const inputEl = document.getElementById('bzInput');
+
+    let idea = (inputEl.value || '').trim();
+    if (random) {
+      idea = bzNextSeed();
+      inputEl.value = idea;
+    }
+
+    btn.disabled = true; dice.disabled = true;
+    loadingBar.classList.add('active');
+    errorBox.classList.remove('visible');
+    errorBox.style.display = 'none';
+
+    try {
+      const response = await fetch(WORKER_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          model: 'claude-sonnet-4-20250514',
+          max_tokens: 1000,
+          messages: [{ role: 'user', content: bzBuildPrompt(idea) }]
+        })
+      });
+
+      if (!response.ok) throw new Error(`Worker error ${response.status}`);
+
+      const data = await response.json();
+      let raw = '';
+      if (data.content && Array.isArray(data.content)) {
+        raw = data.content.map(b => b.text || '').join('');
+      } else if (typeof data.content === 'string') {
+        raw = data.content;
+      }
+
+      const cleaned = raw.replace(/```json|```/g, '').trim();
+      const parsed = JSON.parse(cleaned);
+      bzLastData = parsed;
+      bzRenderOutput(parsed);
+
+    } catch (err) {
+      errorBox.textContent = `The panel refused to develop -- check the Worker connection and try again. (${err.message})`;
+      errorBox.style.display = 'block';
+      errorBox.classList.add('visible');
+    } finally {
+      btn.disabled = false; dice.disabled = false;
+      loadingBar.classList.remove('active');
+    }
+  }
+
+  function bzRenderOutput(d) {
+    document.getElementById('bzOutTitle').textContent = d.title || 'Untitled Incident';
+    document.getElementById('bzOutScene').textContent = d.panel_description || '';
+    const cap = (d.caption || '').replace(/^["“]|["”]$/g, '');
+    document.getElementById('bzOutCaption').textContent = cap ? `“${cap}”` : '';
+
+    const tagsEl = document.getElementById('bzOutTags');
+    tagsEl.innerHTML = '';
+    const tagList = [];
+    if (d.theme) tagList.push(d.theme);
+    (d.tags || []).forEach(t => tagList.push(t));
+    tagList.forEach(t => {
+      const span = document.createElement('span');
+      span.className = 'bz-tag';
+      span.textContent = t;
+      tagsEl.appendChild(span);
+    });
+
+    const out = document.getElementById('bz-output-area');
+    out.classList.remove('visible');
+    void out.offsetWidth;
+    out.classList.add('visible');
+    setTimeout(() => out.scrollIntoView({ behavior: 'smooth', block: 'start' }), 50);
+  }
+
+  function bzCopyScript() {
+    if (!bzLastData) return;
+    const d = bzLastData;
+    const cap = (d.caption || '').replace(/^["“]|["”]$/g, '');
+    const lines = [
+      `BIZARRE -- "${d.title}"`,
+      `-- Single-panel non-sequitur --`,
+      '',
+      `PANEL: ${d.panel_description}`,
+      '',
+      `CAPTION: "${cap}"`,
+      '',
+      `TAGS: ${[d.theme, ...(d.tags || [])].filter(Boolean).join(', ')}`
+    ];
+    const text = lines.join('\n');
+    navigator.clipboard.writeText(text).then(bzShowCopied).catch(() => {
+      const ta = document.createElement('textarea');
+      ta.value = text;
+      ta.style.cssText = 'position:fixed;opacity:0;top:0;left:0';
+      document.body.appendChild(ta);
+      ta.select();
+      document.execCommand('copy');
+      document.body.removeChild(ta);
+      bzShowCopied();
+    });
+  }
+
+  function bzShowCopied() {
+    const el = document.getElementById('bzCopyConfirm');
+    el.classList.add('show');
+    setTimeout(() => el.classList.remove('show'), 2000);
+  }
 </script>
+</body>
+</html>
